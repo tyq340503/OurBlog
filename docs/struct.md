@@ -30,3 +30,15 @@ Potentially we can use their profile to advise them some topics or chatroom they
   * This would be splitted into different categories as well
   * Could be started as a button in header, then choose category in a drop down menu
   * Listed both in home page and category page. Ranked by most recent reply and number of people
+
+## Tech Stack
+
+* Front-End stuff
+  * React.js
+  * ImageMagick
+* Middlewares
+  * Firebase Auth
+  * ElasticSearch
+* Back-End
+  * Redis
+  * Mongoose for MongoDB
