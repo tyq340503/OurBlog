@@ -1,0 +1,19 @@
+{
+  "name": "ourblog",
+  "version": "1.0.0",
+  "description": "CS-554 final project",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cs-554-group8/OurBlog.git"
+  },
+  "author": "Group 8",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cs-554-group8/OurBlog/issues"
+  },
+  "homepage": "https://github.com/cs-554-group8/OurBlog#readme"
+}
