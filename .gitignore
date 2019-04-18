@@ -65,4 +65,4 @@ typings/
 .idea
 .DS_STORE
 package-lock.json
-fp.code-workspace
+.code-workspace
