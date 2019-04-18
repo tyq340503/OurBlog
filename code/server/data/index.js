@@ -1,9 +1,3 @@
-const userData = require('./users');
-const blogData = require('./blogs');
-const commentData = require('./comments');
+const mongoData = require('./mongodb/mongoCollections');
 
-module.exports = {
-    users: userData,
-    blogs: blogData,
-    comments: commentData
-}
+module.exports = mongoData;

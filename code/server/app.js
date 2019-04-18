@@ -1,9 +1,11 @@
 "use strict";
 const { GraphQLServer } = require("graphql-yoga");
-const typeDefs = require("./graphql").typeDef;
 const resolvers = require("./graphql").resolver;
 
-const server = new GraphQLServer({ typeDefs, resolvers });
+const server = new GraphQLServer({ 
+  typeDefs: './graphql/schema.graphql', 
+  resolvers });
+  
 const options = {
   port: 5555,
   endpoint: "/graphql",
