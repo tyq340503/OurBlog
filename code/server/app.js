@@ -1,7 +1,7 @@
 "use strict";
 const { GraphQLServer } = require("graphql-yoga");
 const prisma = require('./data');
-const resolvers = require("./graphql").resolver;
+const resolvers = require("./graphql/resolvers");
 
 const server = new GraphQLServer({ 
   typeDefs: './graphql/schema.graphql', 
