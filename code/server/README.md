@@ -1,5 +1,9 @@
 # Instructions
 
+* `npm install` for Windows and `sudo npm install` for MacOS or Linux
+* Make sure you have the permission to `node_modules/` folder for MaxOS and Linux
+* The optional packages in npm is ok to fail, they are not required.
+
 ## Test GraphQL
 
 1. npm install
@@ -28,4 +32,4 @@ query two {
 ## Test Prisma
 
 1. npm install
-2. go to `code\server\data\prisma\README.md` for further instructions
+2. go to `code\server\data\README.md` for further instructions

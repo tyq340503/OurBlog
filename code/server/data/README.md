@@ -56,5 +56,5 @@ d392692fa546        prismagraphql/prisma:1.31   "/bin/sh -c /app/sta…"   About
 ## 3 - Guide to Test Prisma Server
 
 * Double check you have the permission to see `node_modules/` folder
-* Goto `/OurBlog/code/server/data/`, run `node index`
+* Goto `/OurBlog/code/server/data/prisma/`, run `node seed`
 * Now this page: <http://localhost:4466/_admin> should show three more data

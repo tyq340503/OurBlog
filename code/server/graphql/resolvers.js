@@ -1,46 +1,26 @@
-// fake data
-let links = [
-  {
-    id: "link-0",
-    url: "www.howtographql.com",
-    description: "Fullstack tutorial for GraphQL"
-  },
-  {
-    id: "link-1",
-    url: "www.howtographql.com",
-    description: "Fullstack tutorial for GraphQL"
-  },
-  {
-    id: "link-2",
-    url: "www.howtographql.com",
-    description: "Fullstack tutorial for GraphQL"
-  }
-];
-
-let idCount = links.length;
 const resolvers = {
   Query: {
     info: () => `Testing GraphQL Server`,
-    feed: () => links
-  },
-  // parent is the result of the previous resolver execution level
-  // Optional
-  Link: { // parent here linked to links[i]
-    id: parent => parent.id,
-    description: parent => parent.description,
-    url: parent => parent.url
+    feed: (root, args, context, info) => {
+      return context.prisma.links();
+    }
   },
   Mutation: {
-    post: (parent, args) => {
-      const link = {
-        id: `link-${idCount++}`,
-        description: args.description,
+    post: (root, args, context) => {
+      return context.prisma.createLink({
         url: args.url,
-      }
-      links.push(link);
-      return link;
+        description: args.description
+      });
     }
   }
 }
 
 module.exports = resolvers;
+
+/**
+ * parent --> parent is the result of the previous resolver execution level
+ * Resolver for Type itself like Link is not needed
+ * 
+ * context --> is a plain JS object that every resolver in the resolver chain can read from and write to
+ * It thus basically is a means for resolvers to communicate
+ */
