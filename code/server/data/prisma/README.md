@@ -1,18 +1,17 @@
 # How to config Prisma Client
 
-## For Windows
+## Installation for Windows
 
 1. npm install -g prisma
 2. Install Docker
    1. For Windows 10 Professional : <https://hub.docker.com/editions/community/docker-ce-desktop-windows>
    2. Else install docker toolbox: <https://docs.docker.com/toolbox/toolbox_install_windows/>
-3. Inside of Docker follow this guide: <https://www.prisma.io/docs/1.31/get-started/01-setting-up-prisma-new-database-JAVASCRIPT-a002/>
+3. For Operations in Docker
    1. You should run the `start.sh` in docker folder
-   2. follow the guide and create hello-world prisma client in docker. Note the datamodel.prisma, docker-compose.yml, and prisma.yml are in `code\server\data\prisma\hello-world\`
-   3. run `docker-compose up -d` at /OurBlog/code/server/data/prisma/hello-world
-   4. run `export PRISMA_MANAGEMENT_API_SECRET="abc"` in docker
+   2. Go to `\OurBlog\code\server\data\prisma\hello-world\`, make sure the `prisma.yml` has endpoint points to <http://192.168.99.100:4466>
+   3. run `docker-compose up -d` at `/OurBlog/code/server/data/prisma/hello-world/`
+   4. run `export PRISMA_MANAGEMENT_API_SECRET="abc"` in docker's shell
    5. run `prisma deploy`
-   6. go to `code\server\data\` and run `node index`
 
 * run `docker ps`, should show something similar to:
 
@@ -26,3 +25,32 @@ CONTAINER ID        IMAGE                       COMMAND                  CREATED
 * To change to other env, adjust the endpoint in prisma.yml
 * View data here: <http://192.168.99.100:4466/_admin>
 * Connect Mongodb Compass at 192.168.99.100:4466 with user name prisma and password prisma
+
+## Installation for Mac
+
+1. sudo npm install -g prisma
+2. Install Docker: <https://hub.docker.com/editions/community/docker-ce-desktop-mac>
+3. In your terminal go to `/OurBlog/code/server/data/prisma/hello-world/`
+   1. Adjust the file: `/OurBlog/code/server/data/prisma/hello-world/prisma.yml`, make sure the endpoint is <http://localhost:4466>
+   2. run `docker-compose up -d` at `/OurBlog/code/server/data/prisma/hello-world/`
+   3. run `export PRISMA_MANAGEMENT_API_SECRET="abc"`, this is our security code.
+   4. run `prisma deploy`
+   5. Prisma API Server should listen on <http://localhost:4466>, you can check database at <http://localhost:4466/_admin>
+
+* run `docker ps`, should show something similar to:
+
+~~~docker
+CONTAINER ID        IMAGE                       COMMAND                  CREATED              STATUS              PORTS                      NAMES
+4e1f35ffe349        mongo:3.6                   "docker-entrypoint.s…"   About a minute ago   Up About a minute   0.0.0.0:27017->27017/tcp   hello-world_mongo_1
+d392692fa546        prismagraphql/prisma:1.31   "/bin/sh -c /app/sta…"   About a minute ago   Up About a minute   0.0.0.0:4466->4466/tcp     hello-world_prisma_1
+~~~
+
+* **Note that current setup is for docker in MacOS**
+* To change to other OS, adjust the endpoint in prisma.yml
+* You can also connect Mongodb Compass at <http://localhost:27017> with user name: *prisma* and password: *prisma*
+
+## Guide to Test Prisma Server
+
+* Double check you have the permission to see `node_modules/` folder
+* Goto `/OurBlog/code/server/data/`, run `node index`
+* Now this page: <http://localhost:4466/_admin> should show three more data
