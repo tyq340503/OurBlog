@@ -1,6 +1,6 @@
 # How to config Prisma Client
 
-## Installation for Windows
+## 1 - Installation for Windows
 
 1. npm install -g prisma
 2. Install Docker
@@ -12,6 +12,10 @@
    3. run `docker-compose up -d` at `/OurBlog/code/server/data/prisma/hello-world/`
    4. run `export PRISMA_MANAGEMENT_API_SECRET="abc"` in docker's shell
    5. run `prisma deploy`
+   6. run `prisma generate` to generate API-Client for graphql *(Optional if using the same mongo:3.6 image)*
+   7. Prisma API Server should listen on <http://localhost:4466>, you can check database at <http://localhost:4466/_admin>
+
+### 1.1 - Note that current setup is for docker using Orcal Virtual Box
 
 * run `docker ps`, should show something similar to:
 
@@ -21,12 +25,10 @@ CONTAINER ID        IMAGE                       COMMAND                  CREATED
 9e19aa3c700b        mongo:3.6                   "docker-entrypoint.s…"   3 minutes ago       Up 3 minutes        0.0.0.0:27017->27017/tcp   helloworld_mongo_1
 ~~~
 
-* **Note that current setup is for docker using Orcal Virtual Box**
-* To change to other env, adjust the endpoint in prisma.yml
-* View data here: <http://192.168.99.100:4466/_admin>
-* Connect Mongodb Compass at 192.168.99.100:4466 with user name prisma and password prisma
+* To change to other OS, adjust the endpoint in prisma.yml
+* Connect Mongodb Compass at <http://192.168.99.100:4466> with user name: *prisma* and password: *prisma*
 
-## Installation for Mac
+## 2 - Installation for Mac
 
 1. sudo npm install -g prisma
 2. Install Docker: <https://hub.docker.com/editions/community/docker-ce-desktop-mac>
@@ -35,7 +37,10 @@ CONTAINER ID        IMAGE                       COMMAND                  CREATED
    2. run `docker-compose up -d` at `/OurBlog/code/server/data/prisma/hello-world/`
    3. run `export PRISMA_MANAGEMENT_API_SECRET="abc"`, this is our security code.
    4. run `prisma deploy`
-   5. Prisma API Server should listen on <http://localhost:4466>, you can check database at <http://localhost:4466/_admin>
+   5. run `prisma generate` to generate API-Client for graphql *(Optional if using the same mongo:3.6 image)*
+   6. Prisma API Server should listen on <http://localhost:4466>, you can check database at <http://localhost:4466/_admin>
+
+### 2.1 - Note that current setup is for docker in MacOS
 
 * run `docker ps`, should show something similar to:
 
@@ -45,11 +50,10 @@ CONTAINER ID        IMAGE                       COMMAND                  CREATED
 d392692fa546        prismagraphql/prisma:1.31   "/bin/sh -c /app/sta…"   About a minute ago   Up About a minute   0.0.0.0:4466->4466/tcp     hello-world_prisma_1
 ~~~
 
-* **Note that current setup is for docker in MacOS**
 * To change to other OS, adjust the endpoint in prisma.yml
 * You can also connect Mongodb Compass at <http://localhost:27017> with user name: *prisma* and password: *prisma*
 
-## Guide to Test Prisma Server
+## 3 - Guide to Test Prisma Server
 
 * Double check you have the permission to see `node_modules/` folder
 * Goto `/OurBlog/code/server/data/`, run `node index`
