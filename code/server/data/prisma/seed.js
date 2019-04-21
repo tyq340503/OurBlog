@@ -1,22 +1,31 @@
 const { prisma } = require('./hello-world/generated/prisma-client');
 const Mock = require('mockjs');
-
 const Random = Mock.Random;
-const name = Random.name();
 
 async function main() {
-    const newLink = await prisma.createLink({
-        url: 'www.prisma.test',
-        description: 'Prisma Testing'
+    // Note admin only need to be created once
+    const admin = await prisma.createUser({
+        name: "admin",
+        email: "admin@fake",
+        password: "fake"
     });
-    console.log(`Created new link: ${newLink.url} (ID: ${newLink.id})`);
+    console.log(`<Log>[${new Date().toUTCString()}]: admin user created: ${JSON.stringify(admin)}`);
 
-    const allLinks = await prisma.links();
-    console.log(allLinks);
-    console.log("======================");
+    for (let i = 0; i < 2; i++) {
+        const newBlog = await prisma.createBlog({
+            url: Random.url('http', 'website.fake'),
+            description: Random.word(2,8),
+            postedBy: {
+                connect: {
+                    email: "admin@fake"
+                }
+            }
+        });
+        console.log(`<Log>[${new Date().toUTCString()}]: Created new blog: ${JSON.stringify(newBlog)}`);
+    }
+
+    const allBlogs = await prisma.blogs();
+    console.log(`<Log>[${new Date().toUTCString()}]: ${JSON.stringify(allBlogs)}`);
 }
 
-console.log("+++++++++++++++++++++++++");
-main().catch(e => console.error(e));
-main().catch(e => console.error(e));
 main().catch(e => console.error(e));

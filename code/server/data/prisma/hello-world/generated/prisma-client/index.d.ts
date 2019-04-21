@@ -162,9 +162,194 @@ export type UserOrderByInput =
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
+export interface UserUpdateOneWithoutBlogsInput {
+  create?: UserCreateWithoutBlogsInput;
+  update?: UserUpdateWithoutBlogsDataInput;
+  upsert?: UserUpsertWithoutBlogsInput;
+  delete?: Boolean;
+  disconnect?: Boolean;
+  connect?: UserWhereUniqueInput;
+}
+
 export type BlogWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
 }>;
+
+export interface BlogUpdateManyWithoutPostedByInput {
+  create?: BlogCreateWithoutPostedByInput[] | BlogCreateWithoutPostedByInput;
+  delete?: BlogWhereUniqueInput[] | BlogWhereUniqueInput;
+  connect?: BlogWhereUniqueInput[] | BlogWhereUniqueInput;
+  set?: BlogWhereUniqueInput[] | BlogWhereUniqueInput;
+  disconnect?: BlogWhereUniqueInput[] | BlogWhereUniqueInput;
+  update?:
+    | BlogUpdateWithWhereUniqueWithoutPostedByInput[]
+    | BlogUpdateWithWhereUniqueWithoutPostedByInput;
+  upsert?:
+    | BlogUpsertWithWhereUniqueWithoutPostedByInput[]
+    | BlogUpsertWithWhereUniqueWithoutPostedByInput;
+  deleteMany?: BlogScalarWhereInput[] | BlogScalarWhereInput;
+  updateMany?:
+    | BlogUpdateManyWithWhereNestedInput[]
+    | BlogUpdateManyWithWhereNestedInput;
+}
+
+export interface UserCreateInput {
+  id?: ID_Input;
+  name: String;
+  email: String;
+  password: String;
+  blogs?: BlogCreateManyWithoutPostedByInput;
+}
+
+export interface UserUpdateInput {
+  name?: String;
+  email?: String;
+  password?: String;
+  blogs?: BlogUpdateManyWithoutPostedByInput;
+}
+
+export interface UserUpsertWithoutBlogsInput {
+  update: UserUpdateWithoutBlogsDataInput;
+  create: UserCreateWithoutBlogsInput;
+}
+
+export interface UserSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: UserWhereInput;
+  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
+}
+
+export interface UserUpdateManyMutationInput {
+  name?: String;
+  email?: String;
+  password?: String;
+}
+
+export interface BlogCreateInput {
+  id?: ID_Input;
+  description: String;
+  url: String;
+  postedBy?: UserCreateOneWithoutBlogsInput;
+}
+
+export interface BlogUpdateManyWithWhereNestedInput {
+  where: BlogScalarWhereInput;
+  data: BlogUpdateManyDataInput;
+}
+
+export interface UserCreateOneWithoutBlogsInput {
+  create?: UserCreateWithoutBlogsInput;
+  connect?: UserWhereUniqueInput;
+}
+
+export interface BlogUpsertWithWhereUniqueWithoutPostedByInput {
+  where: BlogWhereUniqueInput;
+  update: BlogUpdateWithoutPostedByDataInput;
+  create: BlogCreateWithoutPostedByInput;
+}
+
+export interface UserCreateWithoutBlogsInput {
+  id?: ID_Input;
+  name: String;
+  email: String;
+  password: String;
+}
+
+export interface BlogUpdateWithoutPostedByDataInput {
+  description?: String;
+  url?: String;
+}
+
+export interface BlogUpdateInput {
+  description?: String;
+  url?: String;
+  postedBy?: UserUpdateOneWithoutBlogsInput;
+}
+
+export interface UserWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  name?: String;
+  name_not?: String;
+  name_in?: String[] | String;
+  name_not_in?: String[] | String;
+  name_lt?: String;
+  name_lte?: String;
+  name_gt?: String;
+  name_gte?: String;
+  name_contains?: String;
+  name_not_contains?: String;
+  name_starts_with?: String;
+  name_not_starts_with?: String;
+  name_ends_with?: String;
+  name_not_ends_with?: String;
+  email?: String;
+  email_not?: String;
+  email_in?: String[] | String;
+  email_not_in?: String[] | String;
+  email_lt?: String;
+  email_lte?: String;
+  email_gt?: String;
+  email_gte?: String;
+  email_contains?: String;
+  email_not_contains?: String;
+  email_starts_with?: String;
+  email_not_starts_with?: String;
+  email_ends_with?: String;
+  email_not_ends_with?: String;
+  password?: String;
+  password_not?: String;
+  password_in?: String[] | String;
+  password_not_in?: String[] | String;
+  password_lt?: String;
+  password_lte?: String;
+  password_gt?: String;
+  password_gte?: String;
+  password_contains?: String;
+  password_not_contains?: String;
+  password_starts_with?: String;
+  password_not_starts_with?: String;
+  password_ends_with?: String;
+  password_not_ends_with?: String;
+  blogs_some?: BlogWhereInput;
+  AND?: UserWhereInput[] | UserWhereInput;
+}
+
+export interface BlogCreateWithoutPostedByInput {
+  id?: ID_Input;
+  description: String;
+  url: String;
+}
+
+export interface BlogUpdateManyDataInput {
+  description?: String;
+  url?: String;
+}
+
+export interface BlogCreateManyWithoutPostedByInput {
+  create?: BlogCreateWithoutPostedByInput[] | BlogCreateWithoutPostedByInput;
+  connect?: BlogWhereUniqueInput[] | BlogWhereUniqueInput;
+}
+
+export interface BlogUpdateManyMutationInput {
+  description?: String;
+  url?: String;
+}
 
 export interface BlogWhereInput {
   id?: ID_Input;
@@ -229,180 +414,10 @@ export interface BlogWhereInput {
   AND?: BlogWhereInput[] | BlogWhereInput;
 }
 
-export interface UserWhereInput {
-  id?: ID_Input;
-  id_not?: ID_Input;
-  id_in?: ID_Input[] | ID_Input;
-  id_not_in?: ID_Input[] | ID_Input;
-  id_lt?: ID_Input;
-  id_lte?: ID_Input;
-  id_gt?: ID_Input;
-  id_gte?: ID_Input;
-  id_contains?: ID_Input;
-  id_not_contains?: ID_Input;
-  id_starts_with?: ID_Input;
-  id_not_starts_with?: ID_Input;
-  id_ends_with?: ID_Input;
-  id_not_ends_with?: ID_Input;
-  name?: String;
-  name_not?: String;
-  name_in?: String[] | String;
-  name_not_in?: String[] | String;
-  name_lt?: String;
-  name_lte?: String;
-  name_gt?: String;
-  name_gte?: String;
-  name_contains?: String;
-  name_not_contains?: String;
-  name_starts_with?: String;
-  name_not_starts_with?: String;
-  name_ends_with?: String;
-  name_not_ends_with?: String;
-  email?: String;
-  email_not?: String;
-  email_in?: String[] | String;
-  email_not_in?: String[] | String;
-  email_lt?: String;
-  email_lte?: String;
-  email_gt?: String;
-  email_gte?: String;
-  email_contains?: String;
-  email_not_contains?: String;
-  email_starts_with?: String;
-  email_not_starts_with?: String;
-  email_ends_with?: String;
-  email_not_ends_with?: String;
-  password?: String;
-  password_not?: String;
-  password_in?: String[] | String;
-  password_not_in?: String[] | String;
-  password_lt?: String;
-  password_lte?: String;
-  password_gt?: String;
-  password_gte?: String;
-  password_contains?: String;
-  password_not_contains?: String;
-  password_starts_with?: String;
-  password_not_starts_with?: String;
-  password_ends_with?: String;
-  password_not_ends_with?: String;
-  blogs_some?: BlogWhereInput;
-  AND?: UserWhereInput[] | UserWhereInput;
-}
-
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-  email?: String;
-}>;
-
-export interface BlogCreateInput {
-  id?: ID_Input;
-  description: String;
-  url: String;
-  postedBy?: UserCreateOneWithoutBlogsInput;
-}
-
-export interface UserCreateOneWithoutBlogsInput {
-  create?: UserCreateWithoutBlogsInput;
-  connect?: UserWhereUniqueInput;
-}
-
-export interface UserCreateWithoutBlogsInput {
-  id?: ID_Input;
-  name: String;
-  email: String;
-  password: String;
-}
-
-export interface BlogUpdateInput {
-  description?: String;
-  url?: String;
-  postedBy?: UserUpdateOneWithoutBlogsInput;
-}
-
-export interface UserUpdateOneWithoutBlogsInput {
-  create?: UserCreateWithoutBlogsInput;
-  update?: UserUpdateWithoutBlogsDataInput;
-  upsert?: UserUpsertWithoutBlogsInput;
-  delete?: Boolean;
-  disconnect?: Boolean;
-  connect?: UserWhereUniqueInput;
-}
-
 export interface UserUpdateWithoutBlogsDataInput {
   name?: String;
   email?: String;
   password?: String;
-}
-
-export interface UserUpsertWithoutBlogsInput {
-  update: UserUpdateWithoutBlogsDataInput;
-  create: UserCreateWithoutBlogsInput;
-}
-
-export interface BlogUpdateManyMutationInput {
-  description?: String;
-  url?: String;
-}
-
-export interface UserCreateInput {
-  id?: ID_Input;
-  name: String;
-  email: String;
-  password: String;
-  blogs?: BlogCreateManyWithoutPostedByInput;
-}
-
-export interface BlogCreateManyWithoutPostedByInput {
-  create?: BlogCreateWithoutPostedByInput[] | BlogCreateWithoutPostedByInput;
-  connect?: BlogWhereUniqueInput[] | BlogWhereUniqueInput;
-}
-
-export interface BlogCreateWithoutPostedByInput {
-  id?: ID_Input;
-  description: String;
-  url: String;
-}
-
-export interface UserUpdateInput {
-  name?: String;
-  email?: String;
-  password?: String;
-  blogs?: BlogUpdateManyWithoutPostedByInput;
-}
-
-export interface BlogUpdateManyWithoutPostedByInput {
-  create?: BlogCreateWithoutPostedByInput[] | BlogCreateWithoutPostedByInput;
-  delete?: BlogWhereUniqueInput[] | BlogWhereUniqueInput;
-  connect?: BlogWhereUniqueInput[] | BlogWhereUniqueInput;
-  set?: BlogWhereUniqueInput[] | BlogWhereUniqueInput;
-  disconnect?: BlogWhereUniqueInput[] | BlogWhereUniqueInput;
-  update?:
-    | BlogUpdateWithWhereUniqueWithoutPostedByInput[]
-    | BlogUpdateWithWhereUniqueWithoutPostedByInput;
-  upsert?:
-    | BlogUpsertWithWhereUniqueWithoutPostedByInput[]
-    | BlogUpsertWithWhereUniqueWithoutPostedByInput;
-  deleteMany?: BlogScalarWhereInput[] | BlogScalarWhereInput;
-  updateMany?:
-    | BlogUpdateManyWithWhereNestedInput[]
-    | BlogUpdateManyWithWhereNestedInput;
-}
-
-export interface BlogUpdateWithWhereUniqueWithoutPostedByInput {
-  where: BlogWhereUniqueInput;
-  data: BlogUpdateWithoutPostedByDataInput;
-}
-
-export interface BlogUpdateWithoutPostedByDataInput {
-  description?: String;
-  url?: String;
-}
-
-export interface BlogUpsertWithWhereUniqueWithoutPostedByInput {
-  where: BlogWhereUniqueInput;
-  update: BlogUpdateWithoutPostedByDataInput;
-  create: BlogCreateWithoutPostedByInput;
 }
 
 export interface BlogScalarWhereInput {
@@ -469,22 +484,6 @@ export interface BlogScalarWhereInput {
   NOT?: BlogScalarWhereInput[] | BlogScalarWhereInput;
 }
 
-export interface BlogUpdateManyWithWhereNestedInput {
-  where: BlogScalarWhereInput;
-  data: BlogUpdateManyDataInput;
-}
-
-export interface BlogUpdateManyDataInput {
-  description?: String;
-  url?: String;
-}
-
-export interface UserUpdateManyMutationInput {
-  name?: String;
-  email?: String;
-  password?: String;
-}
-
 export interface BlogSubscriptionWhereInput {
   mutation_in?: MutationType[] | MutationType;
   updatedFields_contains?: String;
@@ -494,17 +493,59 @@ export interface BlogSubscriptionWhereInput {
   AND?: BlogSubscriptionWhereInput[] | BlogSubscriptionWhereInput;
 }
 
-export interface UserSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: UserWhereInput;
-  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
+export interface BlogUpdateWithWhereUniqueWithoutPostedByInput {
+  where: BlogWhereUniqueInput;
+  data: BlogUpdateWithoutPostedByDataInput;
 }
+
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+  email?: String;
+}>;
 
 export interface NodeNode {
   id: ID_Output;
+}
+
+export interface UserPreviousValues {
+  id: ID_Output;
+  name: String;
+  email: String;
+  password: String;
+}
+
+export interface UserPreviousValuesPromise
+  extends Promise<UserPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  email: () => Promise<String>;
+  password: () => Promise<String>;
+}
+
+export interface UserPreviousValuesSubscription
+  extends Promise<AsyncIterator<UserPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  email: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateBlog {
+  count: Int;
+}
+
+export interface AggregateBlogPromise
+  extends Promise<AggregateBlog>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateBlogSubscription
+  extends Promise<AsyncIterator<AggregateBlog>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface Blog {
@@ -533,6 +574,23 @@ export interface BlogSubscription
   description: () => Promise<AsyncIterator<String>>;
   url: () => Promise<AsyncIterator<String>>;
   postedBy: <T = UserSubscription>() => T;
+}
+
+export interface BlogEdge {
+  node: Blog;
+  cursor: String;
+}
+
+export interface BlogEdgePromise extends Promise<BlogEdge>, Fragmentable {
+  node: <T = BlogPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface BlogEdgeSubscription
+  extends Promise<AsyncIterator<BlogEdge>>,
+    Fragmentable {
+  node: <T = BlogSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface User {
@@ -574,6 +632,47 @@ export interface UserSubscription
     first?: Int;
     last?: Int;
   }) => T;
+}
+
+export interface AggregateUser {
+  count: Int;
+}
+
+export interface AggregateUserPromise
+  extends Promise<AggregateUser>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateUserSubscription
+  extends Promise<AsyncIterator<AggregateUser>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface BlogSubscriptionPayload {
+  mutation: MutationType;
+  node: Blog;
+  updatedFields: String[];
+  previousValues: BlogPreviousValues;
+}
+
+export interface BlogSubscriptionPayloadPromise
+  extends Promise<BlogSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = BlogPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = BlogPreviousValuesPromise>() => T;
+}
+
+export interface BlogSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<BlogSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = BlogSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = BlogPreviousValuesSubscription>() => T;
 }
 
 export interface BlogConnection {
@@ -620,58 +719,20 @@ export interface PageInfoSubscription
   endCursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface BlogEdge {
-  node: Blog;
-  cursor: String;
+export interface BatchPayload {
+  count: Long;
 }
 
-export interface BlogEdgePromise extends Promise<BlogEdge>, Fragmentable {
-  node: <T = BlogPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface BlogEdgeSubscription
-  extends Promise<AsyncIterator<BlogEdge>>,
+export interface BatchPayloadPromise
+  extends Promise<BatchPayload>,
     Fragmentable {
-  node: <T = BlogSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
+  count: () => Promise<Long>;
 }
 
-export interface AggregateBlog {
-  count: Int;
-}
-
-export interface AggregateBlogPromise
-  extends Promise<AggregateBlog>,
+export interface BatchPayloadSubscription
+  extends Promise<AsyncIterator<BatchPayload>>,
     Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateBlogSubscription
-  extends Promise<AsyncIterator<AggregateBlog>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface UserConnection {
-  pageInfo: PageInfo;
-  edges: UserEdge[];
-}
-
-export interface UserConnectionPromise
-  extends Promise<UserConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<UserEdge>>() => T;
-  aggregate: <T = AggregateUserPromise>() => T;
-}
-
-export interface UserConnectionSubscription
-  extends Promise<AsyncIterator<UserConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateUserSubscription>() => T;
+  count: () => Promise<AsyncIterator<Long>>;
 }
 
 export interface UserEdge {
@@ -691,61 +752,29 @@ export interface UserEdgeSubscription
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface AggregateUser {
-  count: Int;
-}
-
-export interface AggregateUserPromise
-  extends Promise<AggregateUser>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateUserSubscription
-  extends Promise<AsyncIterator<AggregateUser>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface BatchPayload {
-  count: Long;
-}
-
-export interface BatchPayloadPromise
-  extends Promise<BatchPayload>,
-    Fragmentable {
-  count: () => Promise<Long>;
-}
-
-export interface BatchPayloadSubscription
-  extends Promise<AsyncIterator<BatchPayload>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Long>>;
-}
-
-export interface BlogSubscriptionPayload {
+export interface UserSubscriptionPayload {
   mutation: MutationType;
-  node: Blog;
+  node: User;
   updatedFields: String[];
-  previousValues: BlogPreviousValues;
+  previousValues: UserPreviousValues;
 }
 
-export interface BlogSubscriptionPayloadPromise
-  extends Promise<BlogSubscriptionPayload>,
+export interface UserSubscriptionPayloadPromise
+  extends Promise<UserSubscriptionPayload>,
     Fragmentable {
   mutation: () => Promise<MutationType>;
-  node: <T = BlogPromise>() => T;
+  node: <T = UserPromise>() => T;
   updatedFields: () => Promise<String[]>;
-  previousValues: <T = BlogPreviousValuesPromise>() => T;
+  previousValues: <T = UserPreviousValuesPromise>() => T;
 }
 
-export interface BlogSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<BlogSubscriptionPayload>>,
+export interface UserSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
     Fragmentable {
   mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = BlogSubscription>() => T;
+  node: <T = UserSubscription>() => T;
   updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = BlogPreviousValuesSubscription>() => T;
+  previousValues: <T = UserPreviousValuesSubscription>() => T;
 }
 
 export interface BlogPreviousValues {
@@ -776,61 +805,44 @@ export interface BlogPreviousValuesSubscription
   url: () => Promise<AsyncIterator<String>>;
 }
 
-export interface UserSubscriptionPayload {
-  mutation: MutationType;
-  node: User;
-  updatedFields: String[];
-  previousValues: UserPreviousValues;
+export interface UserConnection {
+  pageInfo: PageInfo;
+  edges: UserEdge[];
 }
 
-export interface UserSubscriptionPayloadPromise
-  extends Promise<UserSubscriptionPayload>,
+export interface UserConnectionPromise
+  extends Promise<UserConnection>,
     Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = UserPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = UserPreviousValuesPromise>() => T;
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<UserEdge>>() => T;
+  aggregate: <T = AggregateUserPromise>() => T;
 }
 
-export interface UserSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
+export interface UserConnectionSubscription
+  extends Promise<AsyncIterator<UserConnection>>,
     Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = UserSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = UserPreviousValuesSubscription>() => T;
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateUserSubscription>() => T;
 }
 
-export interface UserPreviousValues {
-  id: ID_Output;
-  name: String;
-  email: String;
-  password: String;
-}
+/*
+The `Boolean` scalar type represents `true` or `false`.
+*/
+export type Boolean = boolean;
 
-export interface UserPreviousValuesPromise
-  extends Promise<UserPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  email: () => Promise<String>;
-  password: () => Promise<String>;
-}
-
-export interface UserPreviousValuesSubscription
-  extends Promise<AsyncIterator<UserPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  email: () => Promise<AsyncIterator<String>>;
-  password: () => Promise<AsyncIterator<String>>;
-}
+export type Long = string;
 
 /*
 The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
 */
 export type ID_Input = string | number;
 export type ID_Output = string;
+
+/*
+The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
+*/
+export type String = string;
 
 /*
 DateTime scalar input type, allowing Date
@@ -843,21 +855,9 @@ DateTime scalar output type, which is always a string
 export type DateTimeOutput = string;
 
 /*
-The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
-*/
-export type String = string;
-
-/*
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
 */
 export type Int = number;
-
-/*
-The `Boolean` scalar type represents `true` or `false`.
-*/
-export type Boolean = boolean;
-
-export type Long = string;
 
 /**
  * Model Metadata
