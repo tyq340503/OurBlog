@@ -1,18 +1,13 @@
+const Query = require('./resolvers/Query');
+const Mutation = require('./resolvers/Mutation');
+const User = require('./resolvers/User');
+const Blog = require('./resolvers/Blog');
+
 const resolvers = {
-  Query: {
-    info: () => `Testing GraphQL Server`,
-    feed: (root, args, context, info) => {
-      return context.prisma.links();
-    }
-  },
-  Mutation: {
-    post: (root, args, context) => {
-      return context.prisma.createLink({
-        url: args.url,
-        description: args.description
-      });
-    }
-  }
+  Query,
+  Mutation,
+  User,
+  Blog
 }
 
 module.exports = resolvers;

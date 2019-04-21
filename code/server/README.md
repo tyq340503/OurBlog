@@ -13,6 +13,7 @@
       1. Note for MacOX and Linux
    3. Guide to Test Prisma Server
 2. Test GraphQL
+3. Guide to develop Server
 
 ## 1 - Installation and Test for Prisma Server
 
@@ -77,25 +78,131 @@ d392692fa546        prismagraphql/prisma:1.31   "/bin/sh -c /app/sta…"   About
 
 ## 2 - Test GraphQL
 
-1. Start the prisma server first. If it's already installed, then just follow the steps 2 and 4 in **1.1.1** and **1.2.1**
+1. Start the prisma server first.
+   1. If it's already installed, then start the docker image with 3.2 in **1.1.1** and **1.2.1**
+   2. If it's already started, then start prisma server with 3.4 in **1.1.1** and **1.2.1**
 2. `npm start` at `/OurBlog/code/server/`
 3. go to <http://localhost:5555/playground> to test graphql
 4. test cases:
 
-~~~graphql
-mutation one {
-  post(url: "www.aaa", description: "deas") {
-    id
-    url
-    description
-  }
-}
+### 2.1 - create new user
 
-query two {
-  feed {
-    id
-    url
-    description
+#### 2.1.1 - Request
+
+~~~graphql
+mutation create{
+  signup(
+    name: "Alice"
+    email: "alice@prisma.io"
+    password: "graphql"
+  ) {
+    token
+    user {
+      id
+    }
   }
 }
 ~~~
+
+#### 2.1.2 - Responce
+
+~~~json
+{
+  "data": {
+    "signup": {
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1Y2JiYjcxNDI0YWE5YTAwMDgyOWUyMDMiLCJpYXQiOjE1NTU4MDU5NzJ9.MKJgtWSESNaNvEbv_d2ZKaENkLKGTamrJN6H_wpOcjw",
+      "user": {
+        "id": "5cbbb71424aa9a000829e203"
+      }
+    }
+  }
+}
+~~~
+
+### 2.2 - post new blog
+
+* From the server’s response, copy the authentication token and open another tab in the Playground. Inside that new tab, open the HTTP HEADERS pane in the bottom-left corner and specify the Authorization header - similar to what you did with the Prisma Playground before. Replace the __TOKEN__ placeholder in the following snippet with the copied token
+
+~~~graphql
+{
+  "Authorization": "Bearer __TOKEN__"
+}
+~~~
+
+#### 2.2.1 - Request
+
+~~~graphql
+mutation post {
+  post(
+    url: "www.graphqlconf.org"
+    description: "An awesome GraphQL conference"
+  ) {
+    id
+  }
+}
+~~~
+
+#### 2.2.2 - Responce
+
+~~~json
+{
+  "data": {
+    "post": {
+      "id": "5cbbba4124aa9a000829e204"
+    }
+  }
+}
+~~~
+
+### 2.3 - login
+
+#### 2.3.1 - Request
+
+~~~graphql
+mutation login {
+  login(
+    email: "alice@prisma.io"
+    password: "graphql"
+  ) {
+    token
+    user {
+      email
+      links {
+        url
+        description
+      }
+    }
+  }
+}
+~~~
+
+#### 2.3.2 - Responce
+
+~~~json
+{
+  "data": {
+    "login": {
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1Y2JiYjcxNDI0YWE5YTAwMDgyOWUyMDMiLCJpYXQiOjE1NTU4MDcwNjR9.jg9tzsyodFu_ywMYi1L8dZ1yELvkHuFv_EvqyJDixA4",
+      "user": {
+        "email": "alice@prisma.io",
+        "blogs": [
+          {
+            "url": "www.graphqlconf.org",
+            "description": "An awesome GraphQL conference"
+          }
+        ]
+      }
+    }
+  }
+}
+~~~
+
+## 3 - Guide to develop Server
+
+This is just a Note to Back-End Team
+
+1. To change datamodle in database
+   1. modify `datamodel.prisma`
+   2. The one holds array need `@relation(link: INLINE)`
+   3. `prisma deploy`, the client is auto-generated
+   4. For <http://localhost:4466/_admin> need to clear cache on website if changed Type
