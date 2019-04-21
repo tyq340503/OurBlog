@@ -197,6 +197,42 @@ mutation login {
 }
 ~~~
 
+### 2.4 - getAllBlogs
+
+#### 2.4.1 - Request
+
+~~~graphql
+query allBlogs {
+  feed {
+    id
+    url
+    description
+    postedBy {
+      name
+    }
+  }
+}
+~~~
+
+#### 2.4.2 - Responce
+
+~~~json
+{
+  "data": {
+    "feed": [
+      {
+        "id": "5cbbba4124aa9a000829e204",
+        "url": "www.graphqlconf.org",
+        "description": "An awesome GraphQL conference",
+        "postedBy": {
+          "name": "Alice"
+        }
+      }
+    ]
+  }
+}
+~~~
+
 ## 3 - Guide to develop Server
 
 This is just a Note to Back-End Team
