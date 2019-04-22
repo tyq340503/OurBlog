@@ -1,6 +1,8 @@
 type Query {
   info: String!
-  feedBlogs: [Blog!]!
+  allUsers: [User!]!
+  allBlogs: [Blog!]!
+  allComments: [Comment!]!
 }
 
 type Mutation {

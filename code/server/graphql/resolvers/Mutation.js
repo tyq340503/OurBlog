@@ -23,6 +23,7 @@ async function login(parent, args, context, info) {
 
 function postBlog(parent, args, context, info) {
     const userId = getUserId(context);
+    console.log(userId); // Test
     return context.prisma.createBlog({
         title: args.title,
         article: args.article,
