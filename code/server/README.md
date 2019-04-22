@@ -25,8 +25,8 @@
    2. Else install docker toolbox: <https://docs.docker.com/toolbox/toolbox_install_windows/>
 3. For Operations in Docker (These should all be done within `start.sh`!!!)
    1. You should run the `start.sh` in docker folder
-   2. Go to `\OurBlog\code\server\data\prisma\hello-world\`, make sure the `prisma.yml` has endpoint points to <http://192.168.99.100:4466>
-   3. run `docker-compose up -d` at `/OurBlog/code/server/data/prisma/hello-world/`
+   2. Go to `\OurBlog\code\server\data\prisma\`, make sure the `prisma.yml` has endpoint points to <http://192.168.99.100:4466>
+   3. run `docker-compose up -d` at `/OurBlog/code/server/data/prisma/`
    4. run `export PRISMA_MANAGEMENT_API_SECRET="abc"` in docker's shell
    5. run `prisma deploy`
    6. run `prisma generate` to generate API-Client for graphql *(Optional if using the same mongo:3.6 image)*
@@ -49,9 +49,9 @@ CONTAINER ID        IMAGE                       COMMAND                  CREATED
 
 1. sudo npm install -g prisma
 2. Install Docker: <https://hub.docker.com/editions/community/docker-ce-desktop-mac>
-3. In your terminal go to `/OurBlog/code/server/data/prisma/hello-world/`
-   1. Adjust the file: `/OurBlog/code/server/data/prisma/hello-world/prisma.yml`, make sure the endpoint is <http://localhost:4466>
-   2. run `docker-compose up -d` at `/OurBlog/code/server/data/prisma/hello-world/`
+3. In your terminal go to `/OurBlog/code/server/data/prisma/`
+   1. Adjust the file: `/OurBlog/code/server/data/prisma/prisma.yml`, make sure the endpoint is <http://localhost:4466>
+   2. run `docker-compose up -d` at `/OurBlog/code/server/data/prisma/`
    3. run `export PRISMA_MANAGEMENT_API_SECRET="abc"`, this is our security code.
    4. run `prisma deploy`
    5. run `prisma generate` to generate API-Client for graphql *(Optional if using the same mongo:3.6 image)*
@@ -74,7 +74,8 @@ d392692fa546        prismagraphql/prisma:1.31   "/bin/sh -c /app/sta…"   About
 
 * Double check you have the permission to see `node_modules/` folder
 * Goto `/OurBlog/code/server/data/prisma/`, run `node seed`
-* Now this page: <http://localhost:4466/_admin> should show three more data
+* Or in docker shell, run `prisma seed`
+* Now this page: <http://localhost:4466/_admin> should show initial data
 
 ## 2 - Test GraphQL
 
@@ -84,6 +85,8 @@ d392692fa546        prismagraphql/prisma:1.31   "/bin/sh -c /app/sta…"   About
 2. `npm start` at `/OurBlog/code/server/`
 3. go to <http://localhost:5555/playground> to test graphql
 4. test cases:
+
+## Cases below is outdated
 
 ### 2.1 - create new user
 
