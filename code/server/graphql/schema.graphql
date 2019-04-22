@@ -1,29 +1,50 @@
 type Query {
   info: String!
-  feed: [Blog!]!
-}
-
-type Blog {
-  id: ID!
-  description: String!
-  url: String!
-  postedBy: User
-}
-
-type User {
-  id: ID!
-  name: String!
-  email: String!
-  blogs: [Blog!]!
+  feedBlogs: [Blog!]!
 }
 
 type Mutation {
-  post(url: String!, description: String!): Blog!
-  signup(email: String!, password: String!, name: String!): AuthPayload
-  login(email: String!, password: String!): AuthPayload
+  signup(name: String!, password: String!, email: String!): AuthPayload
+  login(password: String!, email: String!): AuthPayload
+  postBlog(title: String!, article: String!): Blog!
+  postComment(content: String!, blogId: ID!): Comment!
 }
 
 type AuthPayload {
   token: String
   user: User
+}
+
+type User {
+  id: ID!
+  createdAt: String
+  name: String!
+  password: String!
+  email: String!
+  phone: String
+  address: String
+  interest: String
+  blogs: [Blog!]!
+  comments: [Comment!]!
+}
+
+type Blog {
+  id: ID!
+  createdAt: String
+  updatedAt: String
+  title: String!
+  article: String!
+  likes: Int
+  postedBy: User!
+  comments: [Comment!]!
+}
+
+type Comment {
+  id: ID!
+  createdAt: String
+  updatedAt: String
+  content: String!
+  likes: Int
+  postedBy: User!
+  forBlog: Blog!
 }

@@ -23,7 +23,7 @@
 2. Install Docker
    1. For Windows 10 Professional : <https://hub.docker.com/editions/community/docker-ce-desktop-windows>
    2. Else install docker toolbox: <https://docs.docker.com/toolbox/toolbox_install_windows/>
-3. For Operations in Docker
+3. For Operations in Docker (These should all be done within `start.sh`!!!)
    1. You should run the `start.sh` in docker folder
    2. Go to `\OurBlog\code\server\data\prisma\hello-world\`, make sure the `prisma.yml` has endpoint points to <http://192.168.99.100:4466>
    3. run `docker-compose up -d` at `/OurBlog/code/server/data/prisma/hello-world/`
@@ -242,3 +242,4 @@ This is just a Note to Back-End Team
    2. The one holds array need `@relation(link: INLINE)`
    3. `prisma deploy`, the client is auto-generated
    4. For <http://localhost:4466/_admin> need to clear cache on website if changed Type
+   5. `prisma reset` then `prisma deploy` for double relation

@@ -1,3 +1,3 @@
-const { prisma } = require('./prisma/hello-world/generated/prisma-client');
+const { prisma } = require('./prisma/generated/prisma-client');
 
 module.exports = prisma;

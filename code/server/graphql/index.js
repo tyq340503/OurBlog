@@ -2,12 +2,14 @@ const Query = require('./resolvers/Query');
 const Mutation = require('./resolvers/Mutation');
 const User = require('./resolvers/User');
 const Blog = require('./resolvers/Blog');
+const Comment = require('./resolvers/Comment');
 
 const resolvers = {
   Query,
   Mutation,
   User,
-  Blog
+  Blog,
+  Comment
 }
 
 module.exports = resolvers;
