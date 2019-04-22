@@ -1,4 +1,5 @@
 const { prisma } = require('./generated/prisma-client');
+const bcrypt = require('bcryptjs');
 const Mock = require('mockjs');
 const Random = Mock.Random;
 
@@ -6,7 +7,7 @@ async function main() {
     // Note admin only need to be created once
     const admin = await prisma.createUser({
         name: "admin",
-        password: "fake",
+        password: bcrypt.hashSync("fake", 10),
         email: "admin@fake",
         phone: "8001115555",
         address: "123 fake ST, APT 10, DUDETOWN, DT 123456",
