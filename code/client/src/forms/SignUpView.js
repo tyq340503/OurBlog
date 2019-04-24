@@ -5,7 +5,7 @@ const SignUpView = ({ onSubmit }) => {
     return (
         <div>
             <h1>Sign Up</h1>
-            <Form onSubmit={onSubmit}>
+            <Form method="POST" onSubmit={onSubmit}>
                 <Form.Group>
                     <Form.Label>Email</Form.Label>
                     <Form.Control

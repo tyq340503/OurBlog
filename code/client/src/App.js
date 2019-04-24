@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Nav, Navbar, Form, NavDropdown, FormControl } from 'react-bootstrap';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
 
 import SignIn from './SignIn';
@@ -34,13 +34,11 @@ class App extends Component {
             <br />
 
           </header>
-          <switch>
-            <Route path="/" />
-            <Route path="/signin" component={SignIn} />
-            <Route path="/signup" component={SignUp} />
-            {/* <Route path="/pokemon/" component={PokemonListContainer} />
-                  <Route path="/pokemon/" component={PokemonListContainer} /> */}
-          </switch>
+          <Switch>
+            {/* <Route path="/" /> */}
+            <Route path="/signin" exact component={SignIn} />
+            <Route path="/signup" exact component={SignUp} />
+          </Switch>
         </div>
       </Router>
     );
