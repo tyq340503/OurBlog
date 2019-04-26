@@ -225,6 +225,7 @@ export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
 export type BlogWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
+  title?: String;
 }>;
 
 export interface BlogWhereInput {
@@ -1523,6 +1524,11 @@ export type ID_Input = string | number;
 export type ID_Output = string;
 
 /*
+The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
+*/
+export type String = string;
+
+/*
 DateTime scalar input type, allowing Date
 */
 export type DateTimeInput = Date | string;
@@ -1531,11 +1537,6 @@ export type DateTimeInput = Date | string;
 DateTime scalar output type, which is always a string
 */
 export type DateTimeOutput = string;
-
-/*
-The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
-*/
-export type String = string;
 
 /*
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 

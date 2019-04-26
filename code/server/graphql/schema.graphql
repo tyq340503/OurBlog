@@ -1,8 +1,17 @@
+scalar DateTime
+
 type Query {
-  info: String!
+  me: User
+  getUser(id: ID, email: String): User
   allUsers: [User!]!
+  getBlog(id: ID, title: String): Blog
   allBlogs: [Blog!]!
+  filterBlogsByString(searchString: String): [Blog!]!
+  filterBlogsByLikes(minLikes: Int): [Blog!]!
+  getComment(id: ID!): Comment
   allComments: [Comment!]!
+  filterCommentsByString(searchString: String): [Comment!]!
+  filterCommentsByLikes(minLikes: Int): [Comment!]!
 }
 
 type Mutation {
@@ -10,16 +19,18 @@ type Mutation {
   login(password: String!, email: String!): AuthPayload
   postBlog(title: String!, article: String!): Blog!
   postComment(content: String!, blogId: ID!): Comment!
+  updateUser(id: ID, email: String, name: String, password: String, newEmail: String, phone: String, address: String, interest: String): User
+  updateBlog(id: ID!, title: String, article: String, likes: Int): Blog
 }
 
 type AuthPayload {
-  token: String
-  user: User
+  token: String!
+  user: User!
 }
 
 type User {
   id: ID!
-  createdAt: String
+  createdAt: DateTime!
   name: String!
   password: String!
   email: String!
@@ -32,9 +43,9 @@ type User {
 
 type Blog {
   id: ID!
-  createdAt: String
-  updatedAt: String
-  title: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  title: String! 
   article: String!
   likes: Int
   postedBy: User!
@@ -43,8 +54,8 @@ type Blog {
 
 type Comment {
   id: ID!
-  createdAt: String
-  updatedAt: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
   content: String!
   likes: Int
   postedBy: User!

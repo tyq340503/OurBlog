@@ -16,7 +16,7 @@ type Blog @model {
   id: ID! @id # Prisma will auto-generate and store globally unique IDs
   createdAt: DateTime! @createdAt # Auto generate the time
   updatedAt: DateTime! @updatedAt
-  title: String!
+  title: String! @unique
   article: String!
   likes: Int! @default(value: 0)
   postedBy: User! # relation field, this is how to express a one-to-many relationship

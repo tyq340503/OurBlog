@@ -336,6 +336,7 @@ input BlogWhereInput {
 
 input BlogWhereUniqueInput {
   id: ID
+  title: String
 }
 
 type Comment {
