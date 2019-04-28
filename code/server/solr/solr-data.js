@@ -2,8 +2,8 @@ let solrClient = require('./solr-config');
 
 var data = {
     id: "123456789",
-    blog_title: "the United states of america of a content",
-    blog_text: `So you want to head to Macau but don’t want to spend a small fortune? It’s not just all expensive luxury accommodation and frittering away your hard-earned in the opulent casinos. Truth be told, you can do Macau on a budget – it simply takes a planning.
+    blog_title: "wednesday of a fri",
+    blog_text: `So{} you want to head to Macau but don’t want to spend a small fortune? It’s not just all expensive luxury accommodation and frittering away your hard-earned in the opulent casinos. Truth be told, you can do Macau on a budget – it simply takes a planning.
 
     Macau is an autonomous territory that is connected to the Chinese mainland. It’s known as the Las Vegas of Asia – a place where people go for gambling and glitz. But it’s much more than that. It has a rich history, stunning architecture, and plenty of waterside vistas to explore.
     
@@ -132,8 +132,8 @@ module.exports = { update, createSolrCompatibleDocument, deleteDocument, queryTi
 
 async function main()
 {
-    //update(await createSolrCompatibleDocument(data.id, data.blog_title, data.blog_text));
-    let documents = await queryAll("the states");
+    update(await createSolrCompatibleDocument(data.id, data.blog_title, data.blog_text));
+    let documents = await queryAll("midweek");
 
     for(let i in documents)
     {
