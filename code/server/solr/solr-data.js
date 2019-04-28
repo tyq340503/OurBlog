@@ -68,8 +68,7 @@ async function deleteDocument(id)
 
 async function queryTitle(text)
 {
-    let documents = [];
-    let query = `blog_title: \"${text}\" OR blog_title:*${text}* OR blog_title_search: \"${text}\" `;
+    let query = `blog_title:"${text}" OR blog_title:*${text}* OR blog_title_search:"${text}" `;
 
     let searchTermTokens = text.split(" ");
 
@@ -77,22 +76,63 @@ async function queryTitle(text)
     {
         for(let i in searchTermTokens)
         {
-            query = query + `blog_title: \"${searchTermTokens[i]}\" OR blog_title:*${searchTermTokens[i]}* OR blog_title_search: \"${searchTermTokens[i]}\" `;
+            query = query + `blog_title:"${searchTermTokens[i]}" OR blog_title:*${searchTermTokens[i]}* OR blog_title_search:"${searchTermTokens[i]}" `;
         }
     }
 
     console.log(query);
 
     let solrQuery = solrClient.query().q(query);
-
     let result = await solrClient.search(solrQuery);
+    let documents = await createResultDocuments(result.response.docs);
 
-    console.log(result.response);
+    return documents;
 }
+
+async function queryText(text)
+{
+    let query = `blog_text:"${text}" OR blog_text:"*${text}*"`;
+    console.log(query);
+
+    let solrQuery = solrClient.query().q(query);
+    let result = await solrClient.search(solrQuery);
+    let documents = await createResultDocuments(result.response.docs);
+
+    return documents;
+}
+
+async function queryAll(text)
+{
+    let documents = new Array();
+    documents.push(await queryTitle(text));
+    documents.push(await queryText(text));
+
+    return documents;
+}
+
+async function createResultDocuments(results)
+{
+    let documents = [];
+
+    for(let i in results)
+    {
+        let resultDocument = {
+            id: results[i].id,
+            title: results[i].blog_title,
+            text: results[i].blog_text
+        }
+
+        documents.push(resultDocument);
+    }
+
+    return documents;
+}
+
+module.exports = { update, createSolrCompatibleDocument, deleteDocument, queryTitle, queryText, queryAll, createResultDocuments }
 
 async function main()
 {
     update(await createSolrCompatibleDocument(data.id, data.blog_title, data.blog_text));
 }
 
-queryTitle("content");
+queryTitle("television");
