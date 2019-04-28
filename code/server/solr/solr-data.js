@@ -68,7 +68,7 @@ async function deleteDocument(id)
 
 async function queryTitle(text)
 {
-    let query = `blog_title:"${text}" OR blog_title:*${text}* OR blog_title_search:"${text}" `;
+    let query = `blog_title:"${text}" OR blog_title:*${text}* `;
 
     let searchTermTokens = text.split(" ");
 
@@ -76,7 +76,7 @@ async function queryTitle(text)
     {
         for(let i in searchTermTokens)
         {
-            query = query + `blog_title:"${searchTermTokens[i]}" OR blog_title:*${searchTermTokens[i]}* OR blog_title_search:"${searchTermTokens[i]}" `;
+            query = query + `blog_title:"${searchTermTokens[i]}" OR blog_title:*${searchTermTokens[i]}* `;
         }
     }
 
@@ -132,7 +132,14 @@ module.exports = { update, createSolrCompatibleDocument, deleteDocument, queryTi
 
 async function main()
 {
-    update(await createSolrCompatibleDocument(data.id, data.blog_title, data.blog_text));
+    //update(await createSolrCompatibleDocument(data.id, data.blog_title, data.blog_text));
+    let documents = await queryAll("television content");
+
+    for(let i in documents)
+    {
+        console.log(documents[i]);
+    }
 }
 
-queryTitle("television");
+main();
+
