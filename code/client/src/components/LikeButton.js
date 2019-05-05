@@ -1,14 +1,12 @@
-import React, { Component } from "react";
+import React from "react";
 import { Button } from 'react-bootstrap';
 import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
 
 const updateBlog = gql`
-    mutation updateBlog($id: ID!, $title: String!, $article: String!, $likes: Int!){
+    mutation updateBlog($id: ID!, $likes: Int!){
         updateBlog(
             id: $id,
-            title: $title,
-            article: $article,
             likes: $likes
         ) {
             id
@@ -39,35 +37,33 @@ query {
 }
 `;
 
-const LikeButton = (props) => {
+const LikeButton = (all) => {
     return (
         <div>
-            <Mutation query={updateBlog}
-                // update={(cache, { data: { updateBlog } }) => {
-                //     const { allBlogs } = cache.readQuery({
-                //         query: getAllBlogs
-                //     });
-                //     cache.writeQuery({
-                //         query: getAllBlogs,
-                //         data: {
-                //             allBlogs: allBlogs
-                //         }
-                //     })
-                // }}
+            <Mutation mutation={updateBlog}
+                update={(cache, { data: { updateBlog } }) => {
+                    const { allBlogs } = cache.readQuery({
+                        query: getAllBlogs
+                    });
+                    cache.writeQuery({
+                        query: getAllBlogs,
+                        data: {
+                            allBlogs: allBlogs
+                        }
+                    })
+                }}
             >
                 {(updateBlog, { data }) => (
                     <div>
-                        <Button onClick={
-                            updateBlog({
-                                variables: {
-                                    id: props.id,
-                                    title: props.title,
-                                    article: props.article,
-                                    likes: props.likes + 1
-                                }
-                            })
-                        }>
-                            Like {props.likes}
+                        <Button className="float-right" variant="outline-danger" onClick={ e => {
+                                updateBlog({
+                                    variables: {
+                                        id: all.all.id,
+                                        likes: all.all.likes + 1
+                                    }
+                                });
+                        }}>
+                            Like {all.all.likes}
                         </Button>
                     </div>
                 )}
