@@ -6,6 +6,7 @@ import './App.css';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
 import HomePage from './HomePage';
+import CreateArticle from './CreateArticle';
 
 function App() {
   return (
@@ -33,9 +34,10 @@ function App() {
 
         </header>
         <Switch>
-          <Route path="/" component={HomePage} />
+          <Route exact path="/" component={HomePage} />
           <Route path="/signin" component={SignIn} />
           <Route path="/signup" component={SignUp} />
+          <Route path="/create" component={CreateArticle} />
           {/* <Route path="/pokemon/" component={PokemonListContainer} />
                   <Route path="/pokemon/" component={PokemonListContainer} /> */}
         </Switch>
