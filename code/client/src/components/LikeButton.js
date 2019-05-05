@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import { Form, Button, Row, Container, Col } from 'react-bootstrap';
-import ArticleList from './components/ArticleList';
+import { Button } from 'react-bootstrap';
 import gql from 'graphql-tag';
-import { Query } from 'react-apollo';
+import { Mutation } from 'react-apollo';
 
 class LikeButton extends Component {
     constructor(props){
@@ -13,7 +12,11 @@ class LikeButton extends Component {
     }
 
     render() {
-        
+        return(
+            <div>
+
+            </div>
+        );
     }
 
 }
