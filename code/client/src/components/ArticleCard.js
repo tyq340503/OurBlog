@@ -7,7 +7,7 @@ const ArticleCard = props => {
         <Card>
             <Card.Body>
                 <Card.Title>{props.title}</Card.Title>
-                <LikeButton id={props.id} />
+                <LikeButton all={props} />
                 <Card.Subtitle className="mb-2 text-muted">BY {props.postedBy.name}</Card.Subtitle>
                 <Card.Text>
                     {props.article.split(" ").slice(0,100).join(" ").concat('...')}
