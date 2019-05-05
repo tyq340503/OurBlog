@@ -63,6 +63,7 @@ const LikeButton = (all) => {
                                     }
                                 });
                         }}>
+                        {/* all.all.likes probably won't update with cache. try finding what data is instead */}
                             Like {all.all.likes}
                         </Button>
                     </div>
