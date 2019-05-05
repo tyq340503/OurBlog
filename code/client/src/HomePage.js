@@ -48,10 +48,13 @@ class HomePage extends Component {
                             </Button>
                         </Form>
                     </Row>
-                    <Row>
-                        <Col>
+                    <Row className="justify-content-md-center">
+                        <Col sm={2}>
+                            <div>
+
+                            </div>
                         </Col>
-                        <Col>
+                        <Col sm={10} >
                             <Query query={getAllBlogs}>
                                 {({ data }) => {
                                     console.log(data)
