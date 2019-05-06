@@ -7,6 +7,7 @@ import SignIn from './SignIn';
 import SignUp from './SignUp';
 import HomePage from './HomePage';
 import CreateArticle from './CreateArticle';
+import NewUserSurvey from './forms/NewUserSurvey';
 
 function App() {
   return (
@@ -36,8 +37,9 @@ function App() {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route path="/signin" component={SignIn} />
-          <Route path="/signup" component={SignUp} />
+          <Route exact path="/signup" component={SignUp} />
           <Route path="/create" component={CreateArticle} />
+          <Route path="/signup/survey" component={NewUserSurvey} />
           {/* <Route path="/pokemon/" component={PokemonListContainer} />
                   <Route path="/pokemon/" component={PokemonListContainer} /> */}
         </Switch>
