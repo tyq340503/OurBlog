@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Form, Button, Row, Container, Col } from 'react-bootstrap';
 import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
+var im = require('imagemagick');
 
 const newUser = gql`
     mutation addUser ($name: String!, $phone: String!, $address: String, $interest:String!){
@@ -21,6 +22,8 @@ const newUser = gql`
 
 class NewUserSurvey extends Component {
 
+    
+
     render() {
         let name, phone, address, interest;
         let street_address, address2, city, state, zipcode;
@@ -33,7 +36,7 @@ class NewUserSurvey extends Component {
                                 {(newUser, { data }) => (
                                     <Form onSubmit={e => {
                                         e.preventDefault();
-                                        let address_arr = [street_address, address2. city, state, zipcode];
+                                        let address_arr = [street_address, address2.city, state, zipcode];
                                         address = address_arr.join(", ");
                                         newUser({
                                             variables: {
@@ -52,6 +55,10 @@ class NewUserSurvey extends Component {
                                         state.value = "";
                                         zipcode.value = "";
                                     }}>
+                                        <Form.Group>
+                                            <Form.Label for="profile_img">Profile Image</Form.Label>
+                                            <Form.Control type="file" name="file" id="profile_img" />
+                                        </Form.Group>
                                         <Form.Group>
                                             <Form.Label>Name</Form.Label>
                                             <Form.Control
@@ -149,7 +156,7 @@ class NewUserSurvey extends Component {
                                             </Col>
                                         </Row>
                                         <Form.Group controlId="interest">
-                                            <Form.Label>Content</Form.Label>
+                                            <Form.Label>Interests</Form.Label>
                                             <Form.Control as="textarea" rows="2"
                                                 ref={node => {
                                                     interest = node;
@@ -157,7 +164,7 @@ class NewUserSurvey extends Component {
                                                 required
                                             />
                                         </Form.Group>
-                                        <Button variant="outline-primary" type="submit">Post</Button>
+                                        <Button variant="outline-primary" type="submit">Submit</Button>
                                         <Button className="float-right" variant="outline-danger" type="cancel">Cancel</Button>
                                     </Form>
                                 )}
