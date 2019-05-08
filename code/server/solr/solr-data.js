@@ -103,9 +103,13 @@ async function queryText(text)
 
 async function queryAll(text)
 {
-    let documents = new Array();
-    documents.push(await queryTitle(text));
-    documents.push(await queryText(text));
+    let documents = await queryTitle(text);
+    let textResult = await queryText(text);
+
+    for(let i in textResult)
+    {
+        documents.push(textResult[i]);
+    }
 
     return documents;
 }
