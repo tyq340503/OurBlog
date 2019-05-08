@@ -1,4 +1,5 @@
 const { getUserId } = require('../utils');
+const solr = require('../../solr');
 
 // Check Auth --------------------------------------
 function me(parent, args, context, info) {
@@ -53,6 +54,12 @@ function filterBlogsByLikes(parent, { minLikes }, context, info) {
     });
 }
 
+async function elasticSearch(parent, { searchString }, context, info) {
+    const esData = await solr.queryAll(searchString);
+    console.log(JSON.stringify(esData));
+    return esData;
+}
+
 // Comment Functions ---------------------------------------------------
 function getComment(parent, { id }, context, info) {
     return context.prisma.comment({ id });
@@ -89,5 +96,6 @@ module.exports = {
     getComment,
     allComments,
     filterCommentsByString,
-    filterCommentsByLikes
+    filterCommentsByLikes,
+    elasticSearch
 }

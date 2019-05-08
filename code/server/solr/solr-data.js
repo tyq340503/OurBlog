@@ -80,7 +80,7 @@ async function queryTitle(text)
         }
     }
 
-    console.log(query);
+    // console.log(query);
 
     let solrQuery = solrClient.query().q(query);
     let result = await solrClient.search(solrQuery);
@@ -92,7 +92,7 @@ async function queryTitle(text)
 async function queryText(text)
 {
     let query = `blog_text:"${text}" OR blog_text:"*${text}*"`;
-    console.log(query);
+    // console.log(query);
 
     let solrQuery = solrClient.query().q(query);
     let result = await solrClient.search(solrQuery);
@@ -130,16 +130,16 @@ async function createResultDocuments(results)
 
 module.exports = { update, createSolrCompatibleDocument, deleteDocument, queryTitle, queryText, queryAll, createResultDocuments }
 
-async function main()
-{
-    update(await createSolrCompatibleDocument(data.id, data.blog_title, data.blog_text));
-    let documents = await queryAll("midweek");
+// async function main()
+// {
+//     update(await createSolrCompatibleDocument(data.id, data.blog_title, data.blog_text));
+//     let documents = await queryAll("midweek");
 
-    for(let i in documents)
-    {
-        console.log(documents[i]);
-    }
-}
+//     for(let i in documents)
+//     {
+//         console.log(documents[i]);
+//     }
+// }
 
-main();
+// main();
 

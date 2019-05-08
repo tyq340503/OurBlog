@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { APP_SECRET, getUserId } = require('../utils');
+const solr = require('../../solr');
 
 // Auth -----------------------------------------------------------------
 async function signup(parent, args, context, info) {
@@ -20,9 +21,9 @@ async function login(parent, args, context, info) {
 }
 
 // CREATE -----------------------------------------------------------------
-function postBlog(parent, args, context, info) {
+async function postBlog(parent, args, context, info) {
     const userId = getUserId(context);
-    return context.prisma.createBlog({
+    const Blog = await context.prisma.createBlog({
         title: args.title,
         article: args.article,
         postedBy: {
@@ -31,6 +32,10 @@ function postBlog(parent, args, context, info) {
             }
         }
     });
+
+    const esData = await solr.createSolrCompatibleDocument(Blog.id, Blog.title, Blog.article);
+    await solr.update(esData);
+    return Blog;
 }
 
 function postComment(parent, args, context, info) {

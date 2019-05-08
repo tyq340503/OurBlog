@@ -12,6 +12,7 @@ type Query {
   allComments: [Comment!]!
   filterCommentsByString(searchString: String): [Comment!]!
   filterCommentsByLikes(minLikes: Int): [Comment!]!
+  elasticSearch(searchString: String): [ESData]
 }
 
 type Mutation {
@@ -27,6 +28,12 @@ type Mutation {
   deleteUser(id: ID!): User
   deleteBlog(id: ID!): Blog
   deleteComment(id: ID!): Comment
+}
+
+type ESData {
+  id: ID
+  title: String
+  text: String
 }
 
 type AuthPayload {
