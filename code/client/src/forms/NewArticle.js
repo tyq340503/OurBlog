@@ -1,16 +1,8 @@
 import React from 'react';
 import { Form, Button, Row, Col } from 'react-bootstrap';
-import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
+import queries from '../queries';
 
-const postBlog = gql`
-mutation postBlog($title:String!, $article:String!){
-    postBlog(title: $title, article: $article) {
-      id
-      title
-    }
-  }
-`;
 
 let title, article;
 
@@ -20,7 +12,7 @@ const NewArticle = () => {
             <Row className="justify-content-md-center">
                 <Col lg={8}>
                     <h1>Create an Article</h1>
-                    <Mutation mutation={postBlog}>
+                    <Mutation mutation={queries.POST_BLOG}>
                         {(postBlog, { data }) => (
                             <Form onSubmit={e => {
                                 e.preventDefault();
