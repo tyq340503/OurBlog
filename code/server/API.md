@@ -4,6 +4,28 @@ I attached string we need with responce format to make it easier for front-end t
 
 ## Index
 
+1. CREATE
+   1. signup
+   2. login
+   3. post blog
+   4. post comment
+2. READ
+   1. check Auth
+   2. get users
+   3. get blogs
+   4. get comments
+   5. elastic search
+3. UPDATE
+   1. update user
+   2. update post
+   3. update comment
+   4. like post
+   5. like comment
+4. DELETE
+   1. delete user
+   2. delete post
+   3. delete comment
+
 ## 1 - CREATE
 
 ### 1.1 - signup
@@ -344,6 +366,38 @@ query {
         "updatedAt": "2019-05-08T20:23:33.112Z",
         "likes": 0,
         "content": "test, test, test"
+      }
+    ]
+  }
+}
+~~~
+
+### 2.5 - elastic search for blogs
+
+* Request:
+
+~~~graphql
+query {
+  elasticSearch(
+    searchString: "test"
+  ) {
+    id
+    title
+    text
+  }
+}
+~~~
+
+* Responce:
+
+~~~json
+{
+  "data": {
+    "elasticSearch": [
+      {
+        "id": "5cd34c3c0274390007214345",
+        "title": "test for es",
+        "text": "something sndkakd sajndkajs bdkjas jdka "
       }
     ]
   }

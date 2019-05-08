@@ -55,9 +55,7 @@ function filterBlogsByLikes(parent, { minLikes }, context, info) {
 }
 
 async function elasticSearch(parent, { searchString }, context, info) {
-    const esData = await solr.queryAll(searchString);
-    console.log(JSON.stringify(esData));
-    return esData;
+    return await solr.queryAll(searchString);
 }
 
 // Comment Functions ---------------------------------------------------
