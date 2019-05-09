@@ -175,6 +175,42 @@ async function likeComment(parent, args, context, info) {
     });
 }
 
+async function addBlogToTagById(parent, { blogId, tagId }, context, info) {
+    const userId = getUserId(context);
+    if (!userId) {
+        throw new Error("Only login user can  Blog to Tag");
+    }
+
+    return context.prisma.updateTag({
+        where: { id: tagId },
+        data: {
+            blogs: {
+                connect: {
+                    id: blogId
+                }
+            }
+        }
+    });
+}
+
+async function addBlogToTagByTitle(parent, { title, tag }, context, info) {
+    const userId = getUserId(context);
+    if (!userId) {
+        throw new Error("Only login user can  Blog to Tag");
+    }
+
+    return context.prisma.updateTag({
+        where: { tag },
+        data: {
+            blogs: {
+                connect: {
+                    title
+                }
+            }
+        }
+    });
+}
+
 // DELETE -----------------------------------------------------------------
 async function deleteUser(parent, { id, email }, context, info) {
     const userId = getUserId(context);
@@ -258,6 +294,8 @@ module.exports = {
     updateComment,
     likeBlog,
     likeComment,
+    addBlogToTagById,
+    addBlogToTagByTitle,
     deleteUser,
     deleteBlog,
     deleteComment,
