@@ -1,5 +1,11 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const redis = require('redis');
+const bluebird = require("bluebird");
+
+bluebird.promisifyAll(redis);
+const client = redis.createClient(); // localhost:6379
+
 const { APP_SECRET, getUserId } = require('../utils');
 const solr = require('../../solr');
 
@@ -145,8 +151,20 @@ async function updateComment(parent, args, context, info) {
 }
 
 async function likeBlog(parent, { id, title }, context, info) {
+    const userId = getUserId(context);
+
     if (id) {
-        const Blog = await context.prisma.blog({ id });   
+        const Blog = await context.prisma.blog({ id }); 
+        const checkUser = await client.existsAsync(userId);
+        if (checkUser === 1) {
+            const checkBlog = await client.hexistsAsync(userId, Blog.id);
+            if (checkBlog === 1) {
+                // This userId, blogId pair exists
+                return Blog;
+            }            
+        } // pair not exists
+        await client.hsetAsync(userId, Blog.id, "");
+
         return context.prisma.updateBlog({
             where: { id },
             data: {
@@ -154,7 +172,16 @@ async function likeBlog(parent, { id, title }, context, info) {
             }
         });
     } else if (title) {
-        const Blog = await context.prisma.blog({ title });   
+        const Blog = await context.prisma.blog({ title }); 
+        const checkUser = await client.existsAsync(userId);
+        if (checkUser === 1) {
+            const checkBlog = await client.hexistsAsync(userId, Blog.id);
+            if (checkBlog === 1) { // This userId, blogId pair exists
+                return Blog;
+            }
+        } // pair not exists
+        await client.hsetAsync(userId, Blog.id, "");
+
         return context.prisma.updateBlog({
             where: { title },
             data: {
@@ -166,7 +193,17 @@ async function likeBlog(parent, { id, title }, context, info) {
 }
 
 async function likeComment(parent, args, context, info) {
-    const Comment = await context.prisma.comment({ id: args.id });   
+    const userId = getUserId(context);
+    const Comment = await context.prisma.comment({ id: args.id });
+    const checkUser = await client.existsAsync(userId);
+    if (checkUser === 1) {
+        const checkComment = await client.hexistsAsync(userId, Comment.id);
+        if (checkComment === 1) { // This userId, blogId pair exists
+            return Comment;
+        }
+    } // pair not exists
+    await client.hsetAsync(userId, Comment.id, "");
+
     return context.prisma.updateComment({
         where: { id: args.id },
         data: {
