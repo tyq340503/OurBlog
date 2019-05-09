@@ -59,8 +59,8 @@ class HomePage extends Component {
                                             </Button>
                                         </Form>
                                     </Row>
-                                    <Row className="justify-content-md-center">
-                                        <Col sm={2}>
+                                    <Row>
+                                        <Col sm={2} className="float-left">
                                             <Query query={queries.GET_ALL_TAGS}>
                                                 {({data}) => {
                                                     if(!data) {
@@ -73,6 +73,8 @@ class HomePage extends Component {
                                                     } else {
                                                         return (
                                                             <div>
+                                                                <Form.Label><b>Tags:</b></Form.Label> 
+                                                                <br />
                                                                 <ButtonGroup vertical>
                                                                     {allTags.map((tag) => {
                                                                         return <Button key={tag.id}>{tag.tag}</Button>
@@ -84,7 +86,7 @@ class HomePage extends Component {
                                                 }}
                                             </Query>
                                         </Col>
-                                        <Col sm={10} >
+                                        <Col sm={10} className="justify-content-md-center">
                                             <div>
                                                 <ArticleList articles={elasticSearch} />
                                             </div>

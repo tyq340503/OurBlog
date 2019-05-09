@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Form, Button, Row, Col, FormGroup } from 'react-bootstrap';
 import { Query, Mutation } from 'react-apollo';
 import queries from '../queries';
+import { Link } from 'react-router-dom';
 
 
 class NewArticle extends Component {
@@ -10,12 +11,11 @@ class NewArticle extends Component {
         this.state = {
             title: "",
             article: "",
-            tags: new Map(),
-            finalTags: []
+            tags: new Map()
         }
 
         this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleTextChange = this.handleTextChange.bind(this)
     }
 
     handleChange(e) {
@@ -24,21 +24,13 @@ class NewArticle extends Component {
         this.setState(prevState => ({ tags: prevState.tags.set(item, isChecked)}))
     }
 
-    isPicked (value, key, map) {
-        if (value === true) {
-            this.setState(prevState => ({
-                finalTags: prevState.finalTags.append(key)
-            }));
+    handleTextChange(e) {
+        if (e.target.name === "title" || e.target.name === 'article'){
+            this.setState({[e.target.name]: e.target.value});
         }
     }
 
-    async handleSubmit() {
-        this.state.tags.forEach(this.isPicked);
-        return
-    }
-
     render () {
-        let title, article;
         return (
             <div>
                 <Row className="justify-content-md-center">
@@ -48,16 +40,20 @@ class NewArticle extends Component {
                             {(postBlog, { data }) => (
                                 <Form onSubmit={async (e) => {
                                     e.preventDefault();
-                                    await this.handleSubmit();
-                                    postBlog({
-                                        variables: {
-                                            title: title.value,
-                                            article: article.value,
-                                            tags: this.state.finalTags
+                                    var finalTags = [];
+                                    this.state.tags.forEach(function( val, key ) {
+                                        if( val ) {
+                                            finalTags.push(key);
                                         }
                                     });
-                                    title.value = "";
-                                    article.value = "";
+                                    postBlog({
+                                        variables: {
+                                            title: this.state.title,
+                                            article: this.state.article,
+                                            tags: finalTags
+                                        }
+                                    });
+                                    // this.props.history.push(`/profile`);
                                 }}>
                                     <Form.Group>
                                         <Form.Label>Title</Form.Label>
@@ -65,9 +61,7 @@ class NewArticle extends Component {
                                             name="title"
                                             type="title"
                                             placeholder="Title"
-                                            ref={node => {
-                                                title = node
-                                            }}
+                                            onChange={this.handleTextChange}
                                             required
                                             autoFocus={true}
                                         />
@@ -75,9 +69,8 @@ class NewArticle extends Component {
                                     <Form.Group controlId="article">
                                         <Form.Label>Content</Form.Label>
                                         <Form.Control as="textarea" rows="3"
-                                            ref={node => {
-                                                article = node;
-                                            }}
+                                            name="article"
+                                            onChange={this.handleTextChange}
                                             required
                                         />
                                     </Form.Group>
@@ -97,9 +90,11 @@ class NewArticle extends Component {
                                                         {allTags.map((tag) => {
                                                             return (<Form.Check
                                                                 custom
-                                                                lable={tag.tag}
+                                                                name={tag.tag}
+                                                                label={tag.tag}
                                                                 type="checkbox"
                                                                 id={tag.id}
+                                                                key={tag.id}
                                                                 checked={this.state.tags.get(tag.name)}
                                                                 onChange={this.handleChange}
                                                             />);
@@ -110,7 +105,7 @@ class NewArticle extends Component {
                                         </Query>
                                     </FormGroup>
                                     <Button variant="outline-primary" type="submit">Post</Button>
-                                    <Button className="float-right" variant="outline-danger" type="cancel">Cancel</Button>
+                                    <Link to={`/profile`}><Button className="float-right" variant="outline-danger" type="cancel" formNoValidate>Cancel</Button></Link>
                                 </Form>
                             )}
                         </Mutation>
