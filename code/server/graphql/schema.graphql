@@ -67,7 +67,7 @@ type Blog {
   likes: Int
   postedBy: User
   comments: [Comment!]!
-  tags: [Tag!]!
+  relatedTag: Tag
 }
 
 type Comment {
@@ -83,5 +83,5 @@ type Comment {
 type Tag {
   id: ID!
   tag: String!
-  postedBy: Blog
+  blogs: [Blog!]!
 }

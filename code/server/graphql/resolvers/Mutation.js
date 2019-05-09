@@ -62,7 +62,7 @@ function postTag(parent, args, context, info) {
     }
     return context.prisma.createTag({
         tag: args.tag,
-        postedBy: {
+        blogs: {
             connect: {
                 id: args.blogId             
             }
