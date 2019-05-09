@@ -102,6 +102,19 @@ const GET_ALL_TAGS = gql`
     }
 `;
 
+const LIKE_BLOG = gql`
+    mutation likeBlog($id: ID!){
+        likeBlog(
+            id: $id
+        ) {
+            id
+            title
+            article
+            likes
+        }
+    }
+`;
+
 export default {
     ME,
     UPDATE_USER,
@@ -109,5 +122,6 @@ export default {
     GET_ALL_BLOGS,
     ELASTIC_SEARCH,
     GET_BLOG,
-    GET_ALL_TAGS
+    GET_ALL_TAGS,
+    LIKE_BLOG
 }
