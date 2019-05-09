@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Form, Button, Row, Container, Col } from 'react-bootstrap';
+import { Form, Button, ButtonGroup, Row, Container, Col } from 'react-bootstrap';
 import ArticleList from './components/ArticleList';
 import { Query } from 'react-apollo';
 import queries from './queries';
@@ -23,7 +23,6 @@ class HomePage extends Component {
                             variables={{searchString: searchString}}
                     >
                     {({ loading, error, data, refetch, networkStatus }) => {
-                        console.log(typeof searchString, searchString);
                         if (networkStatus === 4) return "Refetching!";
                         if (loading) return null;
                         if (error) return `Error! ${error}`;
@@ -62,9 +61,28 @@ class HomePage extends Component {
                                     </Row>
                                     <Row className="justify-content-md-center">
                                         <Col sm={2}>
-                                            <div>
-
-                                            </div>
+                                            <Query query={queries.GET_ALL_TAGS}>
+                                                {({data}) => {
+                                                    if(!data) {
+                                                        return null;
+                                                    }
+                                                    const { allTags } = data;
+                                                    console.log(allTags)
+                                                    if(!allTags) {
+                                                        return null;
+                                                    } else {
+                                                        return (
+                                                            <div>
+                                                                <ButtonGroup vertical>
+                                                                    {allTags.map((tag) => {
+                                                                        return <Button key={tag.id}>{tag.tag}</Button>
+                                                                    })}
+                                                                </ButtonGroup>
+                                                            </div>
+                                                        );
+                                                    }
+                                                }}
+                                            </Query>
                                         </Col>
                                         <Col sm={10} >
                                             <div>

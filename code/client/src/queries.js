@@ -52,6 +52,9 @@ query {
         comments {
           id
         }
+        tags {
+            tag
+        }
     }
 }
 `;
@@ -90,11 +93,21 @@ const GET_BLOG = gql`
     }
 `;
 
+const GET_ALL_TAGS = gql`
+    query{
+        allTags{
+            id
+            tag
+        }
+    }
+`;
+
 export default {
     ME,
     UPDATE_USER,
     POST_BLOG,
     GET_ALL_BLOGS,
     ELASTIC_SEARCH,
-    GET_BLOG
+    GET_BLOG,
+    GET_ALL_TAGS
 }
