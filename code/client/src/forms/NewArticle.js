@@ -1,6 +1,6 @@
 import React from 'react';
-import { Form, Button, Row, Col } from 'react-bootstrap';
-import { Mutation } from 'react-apollo';
+import { Form, Button, Row, Col, FormGroup } from 'react-bootstrap';
+import { Query, Mutation } from 'react-apollo';
 import queries from '../queries';
 
 
@@ -47,6 +47,32 @@ const NewArticle = () => {
                                         required
                                     />
                                 </Form.Group>
+                                <FormGroup>
+                                    <Form.Label>Tags</Form.Label>
+                                    <Query query={queries.GET_ALL_TAGS}>
+                                        {({ data, refetch }) => {
+                                            if (!data) {
+                                                return null;
+                                            }
+                                            const { allTags } = data;
+                                            if (!allTags) {
+                                                return null;
+                                            }
+                                            return (
+                                                <div>
+                                                    {allTags.map((tag) => {
+                                                        return (<Form.Check
+                                                            custom
+                                                            lable={tag.tag}
+                                                            type="checkbox"
+                                                            id={tag.id}
+                                                        />);
+                                                    })}
+                                                </div>
+                                            );
+                                        }}
+                                    </Query>
+                                </FormGroup>
                                 <Button variant="outline-primary" type="submit">Post</Button>
                                 <Button className="float-right" variant="outline-danger" type="cancel">Cancel</Button>
                             </Form>
