@@ -56,9 +56,45 @@ query {
 }
 `;
 
+const ELASTIC_SEARCH = gql`
+query elasticSearch($searchString: String){
+    elasticSearch(
+        searchString: $searchString
+    ) {
+        id
+        title
+        text
+    }
+}
+`;
+
+const GET_BLOG = gql`
+    query getBlog($id: String!) {
+        getBlog(
+            id: $id
+        ) {
+            id
+            createdAt
+            updatedAt
+            title
+            article
+            likes
+            postedBy {
+                id
+                name
+            }
+            comments {
+                id
+            }
+        }
+    }
+`;
+
 export default {
     ME,
     UPDATE_USER,
     POST_BLOG,
-    GET_ALL_BLOGS
+    GET_ALL_BLOGS,
+    ELASTIC_SEARCH,
+    GET_BLOG
 }
