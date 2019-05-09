@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Form, Button, Row, Col, FormGroup } from 'react-bootstrap';
 import { Query, Mutation } from 'react-apollo';
 import queries from '../queries';
-import { Link } from 'react-router-dom';
+import { Link , Redirect } from 'react-router-dom';
 
 
 class NewArticle extends Component {
@@ -53,7 +53,7 @@ class NewArticle extends Component {
                                             tags: finalTags
                                         }
                                     });
-                                    // this.props.history.push(`/profile`);
+                                    this.props.history.push('/profile');
                                 }}>
                                     <Form.Group>
                                         <Form.Label>Title</Form.Label>
