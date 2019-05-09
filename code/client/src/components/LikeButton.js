@@ -52,20 +52,23 @@ const LikeButton = (all) => {
                     })
                 }}
             >
-                {(likeBlog, { data }) => (
-                    <div>
-                        <Button className="float-right" variant="outline-danger" onClick={ e => {
+                {(likeBlog, { data }) => {
+                    const { likeBlog } = data;
+                    return (
+                        <div>
+                            <Button className="float-right" variant="outline-danger" onClick={e => {
                                 likeBlog({
                                     variables: {
                                         id: all.all.id
                                     }
                                 });
-                        }}>
-                        {/* all.all.likes probably won't update with cache. try finding what data is instead */}
-                            Like {all.all.likes}
-                        </Button>
-                    </div>
-                )}
+                            }}>
+                                {/* all.all.likes probably won't update with cache. try finding what data is instead */}
+                                Like {likeBlog.likes}
+                            </Button>
+                        </div>
+                    )
+                }}
 
             </Mutation>
         </div>
