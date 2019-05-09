@@ -1,51 +1,18 @@
 import React from "react";
 import { Button } from 'react-bootstrap';
-import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
-
-const likeBlog = gql`
-    mutation likeBlog($id: ID!){
-        likeBlog(
-            id: $id
-        ) {
-            id
-            title
-            article
-            likes
-        }
-    }
-`;
-
-const getAllBlogs = gql`
-query {
-    allBlogs {
-        id
-        createdAt
-        updatedAt
-        title
-        article
-        likes
-        postedBy {
-          id
-          name
-        }
-        comments {
-          id
-        }
-    }
-}
-`;
+import queries from '../queries';
 
 const LikeButton = (all) => {
     return (
         <div>
-            <Mutation mutation={likeBlog}
+            <Mutation mutation={queries.LIKE_BLOG}
                 update={(cache, { data: { likeBlog } }) => {
                     const { allBlogs } = cache.readQuery({
-                        query: getAllBlogs
+                        query: queries.GET_ALL_BLOGS
                     });
                     cache.writeQuery({
-                        query: getAllBlogs,
+                        query: queries.GET_ALL_BLOGS,
                         data: {
                             allBlogs: allBlogs
                         }
@@ -53,7 +20,6 @@ const LikeButton = (all) => {
                 }}
             >
                 {(likeBlog, { data }) => {
-                    const { likeBlog } = data;
                     return (
                         <div>
                             <Button className="float-right" variant="outline-danger" onClick={e => {
@@ -64,7 +30,7 @@ const LikeButton = (all) => {
                                 });
                             }}>
                                 {/* all.all.likes probably won't update with cache. try finding what data is instead */}
-                                Like {likeBlog.likes}
+                                Like {data.likeBlog.likes}
                             </Button>
                         </div>
                     )
