@@ -93,8 +93,8 @@ async function updateBlog(parent, args, context, info) {
         if (author.id !== userId) {
             throw new Error(`Blog: ${args.id} is not posted by User: ${userId}`);
         }
-       
-        return context.prisma.updateBlog({
+
+        const Blog = await context.prisma.updateBlog({
             where: { id: args.id },
             data: {
                 title: args.newTitle,
@@ -102,13 +102,17 @@ async function updateBlog(parent, args, context, info) {
                 likes: args.likes
             }
         });
+        const esData = await solr.createSolrCompatibleDocument(Blog.id, Blog.title, Blog.article);
+        await solr.update(esData);
+
+        return Blog;
     } else if (args.title) {
         const author = await context.prisma.blog({ title: args.title }).postedBy();
         if (author.id !== userId) {
             throw new Error(`Blog: ${args.title} is not posted by User: ${userId}`);
         }
        
-        return context.prisma.updateBlog({
+        const Blog = await context.prisma.updateBlog({
             where: { title: args.title },
             data: {
                 title: args.newTitle,
@@ -116,6 +120,10 @@ async function updateBlog(parent, args, context, info) {
                 likes: args.likes
             }
         });
+        const esData = await solr.createSolrCompatibleDocument(Blog.id, Blog.title, Blog.article);
+        await solr.update(esData);
+        
+        return Blog;
     }
     throw new Error("No unique identifier for Blog provided");
 }
