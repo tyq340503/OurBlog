@@ -83,6 +83,20 @@ function filterCommentsByLikes(parent, { minLikes }, context, info) {
     });
 }
 
+// Tag Functions ---------------------------------------------------
+function getTag(parent, { id, tag }, context, info) {
+    if (id) {
+        return context.prisma.tag({ id });
+    } else if (tag) {
+        return context.prisma.tag({ tag });
+    }
+    throw new Error("No blog found");
+}
+
+function allTags(parent, args, context, info) {
+    return context.prisma.tags();
+}
+
 module.exports = {
     me,
     getUser,
@@ -91,9 +105,11 @@ module.exports = {
     allBlogs,
     filterBlogsByString,
     filterBlogsByLikes,
+    elasticSearch,
     getComment,
     allComments,
     filterCommentsByString,
     filterCommentsByLikes,
-    elasticSearch
+    getTag,
+    allTags
 }

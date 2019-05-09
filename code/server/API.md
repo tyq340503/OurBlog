@@ -4,33 +4,38 @@ I attached string we need with responce format to make it easier for front-end t
 
 ## Index
 
-1. CREATE
-   1. signup
-   2. login
-   3. post blog
-   4. post comment
-2. READ
-   1. check Auth
-   2. get users
-   3. get blogs
-   4. get comments
-   5. elastic search
-3. UPDATE
-   1. update user
-   2. update post
-   3. update comment
-   4. like post
-   5. like comment
-4. DELETE
-   1. delete user
-   2. delete post
-   3. delete comment
+- [API Document for Prisma-GraphQL Server](#api-document-for-prisma-graphql-server)
+  - [Index](#index)
+  - [1 - CREATE](#1---create)
+    - [1.1 - signup](#11---signup)
+    - [1.2 - login](#12---login)
+    - [1.3 - post new blog](#13---post-new-blog)
+    - [1.4 - post new comment](#14---post-new-comment)
+    - [1.5 - post new tag](#15---post-new-tag)
+  - [2 - READ](#2---read)
+    - [2.1 - me](#21---me)
+    - [2.2 - get all users](#22---get-all-users)
+    - [2.3 - get all blogs](#23---get-all-blogs)
+    - [2.4 - get all comments](#24---get-all-comments)
+    - [2.5 - get all tags](#25---get-all-tags)
+    - [2.6 - elastic search for blogs](#26---elastic-search-for-blogs)
+  - [3 - UPDATE](#3---update)
+    - [3.1 - update user](#31---update-user)
+    - [3.2 - update blog](#32---update-blog)
+    - [3.3 - update comment](#33---update-comment)
+    - [3.4 - like blog](#34---like-blog)
+    - [3.5 - like comment](#35---like-comment)
+  - [4 - DELETE](#4---delete)
+    - [4.1 - delete user](#41---delete-user)
+    - [4.2 - delete blog](#42---delete-blog)
+    - [4.3 - delete comment](#43---delete-comment)
+    - [4.4 - delete tag](#44---delete-tag)
 
 ## 1 - CREATE
 
 ### 1.1 - signup
 
-* Request:
+- Request:
 
 ~~~graphql
 mutation {
@@ -47,7 +52,7 @@ mutation {
 }
 ~~~
 
-* Responce:
+- Responce:
 
 ~~~json
 {
@@ -64,7 +69,7 @@ mutation {
 
 ### 1.2 - login
 
-* Request:
+- Request:
 
 ~~~graphql
 mutation {
@@ -81,7 +86,7 @@ mutation {
 }
 ~~~
 
-* Responce:
+- Responce:
 
 ~~~json
 {
@@ -99,8 +104,8 @@ mutation {
 
 ### 1.3 - post new blog
 
-* From the server’s response, copy the authentication token and open another tab in the Playground. Inside that new tab, open the HTTP HEADERS pane in the bottom-left corner and specify the Authorization header - similar to what you did with the Prisma Playground before. Replace the __TOKEN__ placeholder in the following snippet with the copied token
-* In Short: Copy the token you get back. Create the following header in HTTP Header, and replace the __TOKEN__ filed with the token you copied.
+- From the server’s response, copy the authentication token and open another tab in the Playground. Inside that new tab, open the HTTP HEADERS pane in the bottom-left corner and specify the Authorization header - similar to what you did with the Prisma Playground before. Replace the __TOKEN__ placeholder in the following snippet with the copied token
+- In Short: Copy the token you get back. Create the following header in HTTP Header, and replace the __TOKEN__ filed with the token you copied.
 
 ~~~json
 {
@@ -108,7 +113,7 @@ mutation {
 }
 ~~~
 
-* Request:
+- Request:
 
 ~~~graphql
 mutation {
@@ -131,7 +136,7 @@ mutation {
 }
 ~~~
 
-* Responce:
+- Responce:
 
 ~~~json
 {
@@ -151,7 +156,7 @@ mutation {
 }
 ~~~
 
-### 1.4 post new comment
+### 1.4 - post new comment
 
 ~~~json
 {
@@ -159,7 +164,7 @@ mutation {
 }
 ~~~
 
-* Request:
+- Request:
 
 ~~~graphql
 mutation {
@@ -179,7 +184,7 @@ mutation {
 }
 ~~~
 
-* Responce:
+- Responce:
 
 ~~~json
 {
@@ -198,6 +203,59 @@ mutation {
 }
 ~~~
 
+### 1.5 - post new tag
+
+~~~json
+{
+  "Authorization": "Bearer __TOKEN__"
+}
+~~~
+
+- Request:
+
+~~~graphql
+mutation {
+  postTag(
+    tag: "aaa"
+    blogId: "5cd386870274390007b2fed1"
+  ) {
+    tag
+    postedBy {
+      title
+      tags {
+        tag
+      }
+    }
+  }
+}
+~~~
+
+- Responce:
+
+~~~json
+{
+  "data": {
+    "postTag": {
+      "tag": "aaa",
+      "postedBy": {
+        "title": "Gvkmpnewgv Mhyrfv Yrjit Fisfdylop",
+        "tags": [
+          {
+            "tag": "inm"
+          },
+          {
+            "tag": "xvi"
+          },
+          {
+            "tag": "aaa"
+          }
+        ]
+      }
+    }
+  }
+}
+~~~
+
 ## 2 - READ
 
 ### 2.1 - me
@@ -210,7 +268,7 @@ This is used to check which user is your current token stands for
 }
 ~~~
 
-* Request:
+- Request:
 
 ~~~graphql
 query me {
@@ -223,7 +281,7 @@ query me {
 }
 ~~~
 
-* Responce:
+- Responce:
 
 ~~~json
 {
@@ -240,7 +298,7 @@ query me {
 
 ### 2.2 - get all users
 
-* Request:
+- Request:
 
 ~~~graphql
 query {
@@ -257,7 +315,7 @@ query {
 }
 ~~~
 
-* Responce:
+- Responce:
 
 ~~~json
 {
@@ -287,60 +345,104 @@ query {
 
 ### 2.3 - get all blogs
 
-* Request:
+- Request:
 
 ~~~graphql
 query {
   allBlogs {
     id
     title
-    article
     createdAt
     updatedAt
     likes
     comments {
       content
     }
+    postedBy {
+      name
+    }
+    tags {
+      tag
+    }
   }
 }
 ~~~
 
-* Responce:
+- Responce:
 
 ~~~json
 {
   "data": {
     "allBlogs": [
       {
-        "id": "5cd32e7b027439000721433f",
-        "title": "newBlog",
-        "article": "something",
-        "createdAt": "2019-05-08T19:31:07.066Z",
-        "updatedAt": "2019-05-08T19:31:07.066Z",
-        "likes": 0,
+        "id": "5cd386870274390007b2fed1",
+        "title": "Gvkmpnewgv Mhyrfv Yrjit Fisfdylop",
+        "createdAt": "2019-05-09T01:46:47.882Z",
+        "updatedAt": "2019-05-09T01:46:47.882Z",
+        "likes": 3,
         "comments": [
           {
-            "content": "test, test, test"
+            "content": "Ujgmmjqo omfglfrs auwbh."
+          },
+          {
+            "content": "Trqzmlydz haxiw giuvse cglepxnxwq zmddwdknck xqrgkx okyqoc biuolp wluvztl."
+          },
+          {
+            "content": "Zwtxitxn yxvm mdmv tzxwhiq uqjf ibtopqup fpt."
+          },
+          {
+            "content": "Fqneevgt fcnjhnbd cdqjqesnv vqrfp mouvvujt."
+          }
+        ],
+        "postedBy": {
+          "name": "admin"
+        },
+        "tags": [
+          {
+            "tag": "inm"
+          },
+          {
+            "tag": "xvi"
           }
         ]
       },
       {
-        "id": "5cd339640274390007214342",
-        "title": "newBlog",
-        "article": "something",
-        "createdAt": "2019-05-08T20:17:40.294Z",
-        "updatedAt": "2019-05-08T20:17:40.294Z",
-        "likes": 0,
-        "comments": []
+        "id": "5cd386880274390007b2fed8",
+        "title": "Jacws Rqz",
+        "createdAt": "2019-05-09T01:46:48.146Z",
+        "updatedAt": "2019-05-09T01:46:48.146Z",
+        "likes": 22,
+        "comments": [
+          {
+            "content": "Iaizegre qettwdxu msorua fubdupmcms meueu yxeshwk aigvw toxvngk yyshwgw dhv twockn dxcswzsd."
+          },
+          {
+            "content": "Djywqfvx vyyn vbvqcl peanksc wedo bmjwvc jqqdzrsu."
+          },
+          {
+            "content": "Jxbwl kodtquw xwnudwp lwotjm mviuo."
+          }
+        ],
+        "postedBy": {
+          "name": "admin"
+        },
+        "tags": [
+          {
+            "tag": "tgvz"
+          },
+          {
+            "tag": "yhqe"
+          }
+        ]
       }
     ]
   }
 }
 ~~~
 
-### 2.4 - get all coments
+### 2.4 - get all comments
 
-* Request:
+- Request:
 
 ~~~graphql
 query {
@@ -354,7 +456,7 @@ query {
 }
 ~~~
 
-* Responce:
+- Responce:
 
 ~~~json
 {
@@ -372,9 +474,49 @@ query {
 }
 ~~~
 
-### 2.5 - elastic search for blogs
+### 2.5 - get all tags
 
-* Request:
+- Request:
+
+~~~graphql
+query {
+  allTags {
+    id
+    tag
+  }
+}
+~~~
+
+- Responce:
+
+~~~json
+{
+  "data": {
+    "allTags": [
+      {
+        "id": "5cd386880274390007b2fed6",
+        "tag": "inm"
+      },
+      {
+        "id": "5cd386880274390007b2fed7",
+        "tag": "xvi"
+      },
+      {
+        "id": "5cd386880274390007b2fedc",
+        "tag": "tgvz"
+      },
+      {
+        "id": "5cd386880274390007b2fedd",
+        "tag": "yhqe"
+      }
+    ]
+  }
+}
+~~~
+
+### 2.6 - elastic search for blogs
+
+- Request:
 
 ~~~graphql
 query {
@@ -388,7 +530,7 @@ query {
 }
 ~~~
 
-* Responce:
+- Responce:
 
 ~~~json
 {
@@ -406,7 +548,7 @@ query {
 
 ## 3 - UPDATE
 
-### 3.1 update user
+### 3.1 - update user
 
 ~~~json
 {
@@ -414,7 +556,7 @@ query {
 }
 ~~~
 
-* Request:
+- Request:
 
 ~~~graphql
 mutation {
@@ -435,7 +577,7 @@ mutation {
 }
 ~~~
 
-* Responce:
+- Responce:
 
 ~~~json
 {
@@ -452,7 +594,7 @@ mutation {
 }
 ~~~
 
-### 3.2 update blog
+### 3.2 - update blog
 
 ~~~json
 {
@@ -460,7 +602,7 @@ mutation {
 }
 ~~~
 
-* Request:
+- Request: You can use id or title for args
 
 ~~~graphql
 mutation {
@@ -474,7 +616,7 @@ mutation {
 }
 ~~~
 
-* Responce:
+- Responce:
 
 ~~~json
 {
@@ -487,7 +629,7 @@ mutation {
 }
 ~~~
 
-### 3.3 update comment
+### 3.3 - update comment
 
 ~~~json
 {
@@ -495,7 +637,7 @@ mutation {
 }
 ~~~
 
-* Request:
+- Request:
 
 ~~~graphql
 mutation {
@@ -518,7 +660,7 @@ mutation {
 }
 ~~~
 
-* Responce:
+- Responce:
 
 ~~~json
 {
@@ -539,9 +681,9 @@ mutation {
 }
 ~~~
 
-### 3.4 like blog
+### 3.4 - like blog
 
-* Request:
+- Request: You can use id or title for args
 
 ~~~graphql
 mutation {
@@ -554,7 +696,7 @@ mutation {
 }
 ~~~
 
-* Responce:
+- Responce:
 
 ~~~json
 {
@@ -567,9 +709,9 @@ mutation {
 }
 ~~~
 
-### 3.5 like comment
+### 3.5 - like comment
 
-* Request:
+- Request:
 
 ~~~graphql
 mutation {
@@ -582,7 +724,7 @@ mutation {
 }
 ~~~
 
-* Responce:
+- Responce:
 
 ~~~json
 {
@@ -595,9 +737,9 @@ mutation {
 }
 ~~~
 
-## 3 - DELETE
+## 4 - DELETE
 
-### 3.1 delete user
+### 4.1 - delete user
 
 ~~~json
 {
@@ -605,7 +747,7 @@ mutation {
 }
 ~~~
 
-* Request:
+- Request: You can use id or email for args
 
 ~~~graphql
 mutation {
@@ -618,7 +760,7 @@ mutation {
 }
 ~~~
 
-* Responce:
+- Responce:
 
 ~~~json
 {
@@ -631,7 +773,7 @@ mutation {
 }
 ~~~
 
-### 3.2 delete blog
+### 4.2 - delete blog
 
 ~~~json
 {
@@ -639,7 +781,7 @@ mutation {
 }
 ~~~
 
-* Request:
+- Request: You can use id or title for args
 
 ~~~graphql
 mutation {
@@ -651,7 +793,7 @@ mutation {
 }
 ~~~
 
-* Responce:
+- Responce:
 
 ~~~json
 {
@@ -663,7 +805,7 @@ mutation {
 }
 ~~~
 
-### 3.1 delete comment
+### 4.3 - delete comment
 
 ~~~json
 {
@@ -671,7 +813,7 @@ mutation {
 }
 ~~~
 
-* Request:
+- Request:
 
 ~~~graphql
 mutation {
@@ -683,13 +825,47 @@ mutation {
 }
 ~~~
 
-* Responce:
+- Responce:
 
 ~~~json
 {
   "data": {
     "deleteComment": {
       "content": "some comtent"
+    }
+  }
+}
+~~~
+
+### 4.4 - delete tag
+
+~~~json
+{
+  "Authorization": "Bearer __TOKEN__"
+}
+~~~
+
+- Request: You can use id or tag for args
+
+~~~graphql
+mutation deleteTag {
+  deleteTag(
+    tag: "aaa"
+  ) {
+    id
+    tag
+  }
+}
+~~~
+
+- Responce:
+
+~~~json
+{
+  "data": {
+    "deleteTag": {
+      "id": "5cd38a190274390007b2fede",
+      "tag": "aaa"
     }
   }
 }
