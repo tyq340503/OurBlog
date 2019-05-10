@@ -14,16 +14,31 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+import queries from './queries'
+
 // The uri is a mandatory value to define the only GraphQL API endpoint used by the Apollo Client.
 const BASE_URL = 'http://localhost:5555/graphql';
+
+const customFetch = (uri, options) => {
+	return fetch(uri, {
+			...options,
+			headers: {
+				...options.headers,
+				"Authorization": `Bearer ${queries.TOKEN}`
+			}
+		}
+	);
+}
+
 
 /*
 he http link is a terminating link that fetches GraphQL results from a GraphQL endpoint over an http connection. 
 The http link supports both POST and GET requests with the ability to change the http options on a per query basis. 
 This can be used for authentication, persisted queries, dynamic uris, and other granular updates.
 */
-const httpLink = new HttpLink({
+let httpLink = new HttpLink({
 	uri: BASE_URL,
+	fetch: customFetch,
 	onError: ({ networkError, graphQLErrors }) => {
 		console.log('graphQLErrors', graphQLErrors);
 		console.log('networkError', networkError);
