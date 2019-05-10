@@ -55,7 +55,7 @@ class SignUpContainer extends Component {
                                 {(signup, { data }) => (
                                     <Form onSubmit={async (e) => {
                                         e.preventDefault();
-                                        await this.handleSignUp;
+                                        this.handleSignUp(e);
                                         console.log(this.state);
                                         signup({
                                             variables: {

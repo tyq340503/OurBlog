@@ -141,6 +141,8 @@ const LOGIN = gql`
     }
 `;
 
+let TOKEN = "aaa";
+
 export default {
     ME,
     UPDATE_USER,
@@ -151,5 +153,6 @@ export default {
     GET_ALL_TAGS,
     LIKE_BLOG,
     SIGN_UP,
-    LOGIN
+    LOGIN,
+    TOKEN
 }

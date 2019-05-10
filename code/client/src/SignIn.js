@@ -53,18 +53,19 @@ class SignInContainer extends Component {
                             <Col lg={4}>
                                 <h1>Sign In</h1>
                                 <Mutation mutation={queries.LOGIN}>
-                                    {(login, { data }) => {
+                                    {(login, data ) => {
                                         return (
                                             <div>
                                                 <Form onSubmit={async(e) => {
                                                     e.preventDefault();
-                                                    await this.handleSignIn
+                                                    this.handleSignIn(e);
                                                     login({
                                                         variables: {
                                                             email: this.state.email,
                                                             password: this.state.password
                                                         }
                                                     });
+                                                    console.log("data", data);
                                                 }}>
                                                     <Form.Group>
                                                         <Form.Label>Email</Form.Label>
